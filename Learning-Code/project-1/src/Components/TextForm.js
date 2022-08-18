@@ -48,8 +48,11 @@ export default function TextForm(props) {
                     Total Characters: <span style={{ "color": "green", "font-weight": "bolder" }}>{text.length}</span>
                 </h5>
                 <h5 className="my-2">
-                    <span style={{ "color": "green", "font-weight": "bolder" }}>{(text.length)*0.008} Minutes</span> To Read
+                    <span style={{ "color": "green", "font-weight": "bolder" }}>{((text.length)*0.008).toFixed(2)} Minutes</span> To Read
                 </h5>
+                <br />
+                <h1>Preview</h1>
+                <p>{text}</p>
             </div>
         </>
 
