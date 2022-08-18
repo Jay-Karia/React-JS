@@ -7,8 +7,8 @@ function App() {
   return (
     <>
     <Navbar title="TextUtils" aboutText="About TextUtils"/>
-    {/* <TextForm heading="Enter text to analyze below"/> */}
-    <About/>
+    <TextForm heading="Enter text to analyze below"/>
+    {/* <About/> */}
     </>
 
   );
