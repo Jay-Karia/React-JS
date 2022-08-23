@@ -20,6 +20,18 @@ export default function TextForm(props) {
         setText("")
     }
 
+    const handleCopy = ()=> {
+        let text = document.getElementById('exampleFormControlTextarea1');
+        text.select()
+        navigator.clipboard.writeText(text.value)
+    }
+
+    const handleTrim = ()=> {
+        let text = document.getElementById('exampleFormControlTextarea1').value
+        let newText = text.split(/[ ]+/)
+        setText(newText.join(" "))
+    }
+
     const [text, setText] = useState("")
     return (
         <>
@@ -36,6 +48,8 @@ export default function TextForm(props) {
                 />
                 <button className="btn btn-dark my-3 mx-2" onClick={handleUpClick}>Convert to UpperCase</button>
                 <button className="btn btn-secondary my-3 mx-2" onClick={handleDownClick}>Convert To LowerCase</button>
+                <button className="btn btn-primary my-3 mx-2" onClick={handleCopy}>Copy</button>
+                <button className="btn btn-primary my-3 mx-2" onClick={handleTrim}>Trim</button>
                 <button className="btn btn-danger my-3 mx-2" onClick={clear}>Clear</button>
             </div>
 
