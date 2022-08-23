@@ -1,2 +1,2 @@
 React JS;
-    - Props and Prop Types
+    - Video 11 CWH React Playlist
