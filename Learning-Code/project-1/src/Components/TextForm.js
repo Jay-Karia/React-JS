@@ -45,6 +45,7 @@ export default function TextForm(props) {
                     rows={8}
                     value={text}
                     onChange={handleOnChange}
+                    style={{backgroundColor: props.mode==="dark"? "grey":"white"}}
                 />
                 <button className="btn btn-dark my-3 mx-2" onClick={handleUpClick}>Convert to UpperCase</button>
                 <button className="btn btn-secondary my-3 mx-2" onClick={handleDownClick}>Convert To LowerCase</button>
@@ -66,7 +67,7 @@ export default function TextForm(props) {
                 </h5>
                 <br />
                 <h1>Preview</h1>
-                <p>{text}</p>
+                <p>{text.length<=0? "Enter something to get the Preview": text}</p>
             </div>
         </>
 
