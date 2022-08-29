@@ -12,14 +12,12 @@ function App() {
     const [alert, setAlert] = useState(null)
 
     const changeTheme = (bg, font, button, theme) => {
-        setTheme(
-            {
-                bgColor: bg,
-                fontColor: font,
-                buttonColor: button,
-                theme: theme
-            }
-        )
+        setTheme({
+            bgColor: bg,
+            fontColor: font,
+            buttonColor: button,
+            theme: theme
+        })
         if (theme === "red") {
             document.getElementsByTagName('body')[0].style.backgroundColor = bg
             document.getElementsByTagName('body')[0].style.color = "white"
@@ -36,12 +34,10 @@ function App() {
 
 
     const showAlert = (message, type) => {
-        setAlert(
-            {
-                msg: message,
-                type: type
-            }
-        )
+        setAlert({
+            msg: message,
+            type: type
+        })
         setTimeout(() => {
             setAlert(null)
         }, 3000)
@@ -56,19 +52,22 @@ function App() {
         } else {
             setMode("dark")
             document.getElementsByTagName('body')[0].style.backgroundColor = "black"
-            // document.getElementsByTagName('body')[0].style.backgroundColor="hsl(200, 100%, 30%)"
+                // document.getElementsByTagName('body')[0].style.backgroundColor="hsl(200, 100%, 30%)"
             document.getElementsByTagName('body')[0].style.color = "white"
             showAlert("Dark Mode has been enabled", "success")
         }
     }
 
     return (
-        <>
-            <Navbar title="TextUtils" aboutText="About TextUtils" mode={mode} toggleMode={toggleMode}
-                    changeTheme={changeTheme} theme={theme}/>
-            <Alert alert={alert}/>
-            <TextForm heading="Enter text to analyze below" showAlert={showAlert} theme={theme}/>
-            {/* <About/> */}
+        < >
+        <Navbar title = "TextUtils"
+        aboutText = "About TextUtils"
+        mode = { mode }
+        toggleMode = { toggleMode }
+        changeTheme = { changeTheme }
+        theme = { theme }/>
+         <Alert alert = { alert }/> 
+         <TextForm heading = "Enter text to analyze below" showAlert = { showAlert } theme = { theme }/> 
         </>
 
     );

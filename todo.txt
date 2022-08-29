@@ -1,2 +1,4 @@
 React JS;
-    - Video 11 CWH React Playlist
+    - Changing the website icon
+    - 
+    - Creating a new react app for routers
