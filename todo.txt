@@ -1,4 +1,4 @@
 React JS;
     - Changing the website icon
-    - 
+    - Improvising the themes
     - Creating a new react app for routers
