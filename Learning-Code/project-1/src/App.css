@@ -38,7 +38,7 @@
 }
 
 .form-switch {
-    width:15em;
+    width: 15em;
 }
 
 .alert {
@@ -52,4 +52,9 @@
     margin-right: 20px;
     border-radius: 20px;
     background-color: hsl(200, 30%, 90%);
+}
+
+.rounded:hover {
+    box-shadow: 0 0 5px 5px white;
+    cursor: cell;
 }
