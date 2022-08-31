@@ -52,3 +52,13 @@
     box-shadow: 0 0 5px 5px white;
     cursor: cell;
 }
+
+.accordion {
+    border: 2px solid black;
+    padding: 20px 40px;
+    border-radius: 10px;
+}
+
+.accordion-button strong {
+    color: black
+}
