@@ -37,7 +37,7 @@ function App() {
         document.getElementsByTagName("textarea")[0].style.backgroundColor = textareaColor;
         document.getElementsByTagName("textarea")[0].style.color = textareaFont;
         document.getElementsByTagName("nav")[0].style.color = font;
-        for (let j = 0; j < 7; j++) {
+        for (let j = 0; j < 6; j++) {
             document.getElementsByTagName("button")[j].style.backgroundColor = button;
             document.getElementsByTagName("button")[j].style.color = buttonFont;
         }

@@ -36,26 +36,6 @@ export default function TextForm(props) {
     props.showAlert("Text is trimmed", "info");
   };
 
-  const handleCamel = () => {
-    let text = document.getElementById("exampleFormControlTextarea1").value;
-    let len = text.split(" ").length;
-    let words = [];
-    for (let i = 0; i < len; i++) {
-      words.push(text.split(" ")[i]);
-    }
-
-    let newText = "";
-    for (let j = 0; j < len; j++) {
-      words[j] = words[j].replace(
-        words[j].charAt(0),
-        words[j].charAt(0).toUpperCase()
-      );
-      newText += words[j] + " ";
-    }
-    setText(newText);
-    props.showAlert("Converted to CamelCase", "success");
-  };
-
   const [text, setText] = useState("");
   return (
     <>
@@ -76,45 +56,40 @@ export default function TextForm(props) {
             color: props.mode === "dark" ? "white" : "black",
           }}
         />
-        <button className="btn btn-dark my-3 mx-2" onClick={handleUpClick}>
-          Convert to UpperCase
-        </button>
-        <button
-          className="btn btn-secondary my-3 mx-2"
-          onClick={handleDownClick}
-        >
-          Convert To LowerCase
-        </button>
-        <button className="btn btn-secondary my-3 mx-2" onClick={handleCamel}>
-          Convert To CamelCase
-        </button>
-        <button className="btn btn-primary my-3 mx-2" onClick={handleCopy}>
-          Copy
-        </button>
-        <button className="btn btn-primary my-3 mx-2" onClick={handleTrim}>
-          Trim
-        </button>
-        <button className="btn btn-danger my-3 mx-2" onClick={clear}>
-          Clear
-        </button>
+        <button className="btn btn-dark my-3 mx-2" onClick={handleUpClick}>Convert to UpperCase</button>
+        <button className="btn btn-secondary my-3 mx-2"onClick={handleDownClick}>Convert To LowerCase</button>
+        <button className="btn btn-primary my-3 mx-2" onClick={handleCopy}>Copy</button>
+        <button className="btn btn-primary my-3 mx-2" onClick={handleTrim}>Trim</button>
+        <button className="btn btn-danger my-3 mx-2" onClick={clear}>Clear</button>
       </div>
 
       <div className="container my-3">
         <h1>Your Text Summary</h1>
         <h5 className="my-2">
           Total Words:{" "}
-          <span className="sp" style={{ color: "green", "font-weight": "bolder" }}>
-            {text.split(" ").length}
+          <span
+            className="sp"
+            style={{ color: "green", "font-weight": "bolder" }}
+          >
+            {
+              text.split(" ").filter((e) => {
+                return e.length !== 0;
+              }).length
+            }
           </span>
         </h5>
         <h5 className="my-2">
           Total Characters:{" "}
-          <span className="sp" style={{ color: "green", "font-weight": "bolder" }}>
+          <span
+            className="sp"
+            style={{ color: "green", "font-weight": "bolder" }}
+          >
             {text.length}
           </span>
         </h5>
         <h5 className="my-2">
-          <span className="sp"
+          <span
+            className="sp"
             style={{
               color: "green",
               "font-weight": "bolder",

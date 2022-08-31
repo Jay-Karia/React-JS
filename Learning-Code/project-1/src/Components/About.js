@@ -38,7 +38,7 @@ export default function About() {
                             aria-controls="collapseOne"
                             style={myStyle}
                         >
-                            Accordion Item #1
+                            Analyze Your Text
                         </button>
                     </h2>
                     <div
@@ -70,7 +70,7 @@ export default function About() {
                             aria-controls="collapseTwo"
                             style={myStyle}
                         >
-                            Accordion Item #2
+                            Free to Use
                         </button>
                     </h2>
                     <div
@@ -103,7 +103,7 @@ export default function About() {
                             aria-controls="collapseThree"
                             style={myStyle}
                         >
-                            Accordion Item #3
+                            Browser Compatible
                         </button>
                     </h2>
                     <div
@@ -124,8 +124,6 @@ export default function About() {
                         </div>
                     </div>
                 </div>
-                <button className="btn btn-dark my-4" onClick={toggleMode}>{btnText}</button>
-
             </div>
 
         </>
