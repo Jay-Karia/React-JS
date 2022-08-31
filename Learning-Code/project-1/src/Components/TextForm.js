@@ -24,7 +24,6 @@ export default function TextForm(props) {
 
   const handleCopy = () => {
     let text = document.getElementById("exampleFormControlTextarea1");
-    text.select();
     navigator.clipboard.writeText(text.value);
     props.showAlert("Text Copied", "success");
   };
@@ -72,7 +71,7 @@ export default function TextForm(props) {
             style={{ color: "green", "font-weight": "bolder" }}
           >
             {
-              text.split(" ").filter((e) => {
+              text.split(/\s+/).filter((e) => {
                 return e.length !== 0;
               }).length
             }

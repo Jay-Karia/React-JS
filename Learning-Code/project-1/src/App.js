@@ -50,7 +50,6 @@ function App() {
         <>
             <Navbar
                 title="TextUtils"
-                aboutText="About TextUtils"
                 applyTheme={applyTheme}
             />
             <Alert alert={alert}/>
