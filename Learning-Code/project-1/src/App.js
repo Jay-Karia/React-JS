@@ -54,6 +54,7 @@ function App() {
             />
             <Alert alert={alert}/>
             <TextForm heading="Enter text to analyze below" showAlert={showAlert}/>
+
         </>
     );
 }
