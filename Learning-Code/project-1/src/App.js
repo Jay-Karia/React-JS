@@ -1,3 +1,4 @@
+
 import "./App.css";
 import Alert from "./Components/Alert";
 import Navbar from "./Components/Navbar";
@@ -54,8 +55,8 @@ function App() {
       
       setTheme({
         bg: button,
-        otherColor:special,
-        anotherColor: textareaColor, 
+        otherColor:textareaColor,
+        anotherColor: bg, 
         color:font
         })
       showAlert("Theme changed", cls);
