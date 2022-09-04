@@ -1,4 +1,2 @@
 React JS;
-    - Changing the website icon (Done) (30-Aug-2022)
-    - Improvising the themes
-    - Creating a new react app for routers
+    - Resume from Code With Harry video #23 12:02 
