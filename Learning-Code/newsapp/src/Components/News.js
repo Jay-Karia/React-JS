@@ -14,11 +14,8 @@ export default class News extends Component {
   }
 
   async componentDidMount() {
-    let url =
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=e0915fa6d785405690bceaab3b54c2c7&page=${this.state.page}&pageSize=20&category=${this.props.category}`;
-      this.setState({
-        loading: true
-      })
+    let url =`https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=e0915fa6d785405690bceaab3b54c2c7&page=${this.state.page}&pageSize=20&category=${this.props.category}`;
+    this.setState({loading: true})
     let response = await fetch(url);
     let parsed = await response.json();
     this.setState({
@@ -29,21 +26,13 @@ export default class News extends Component {
    
   }
   handlePre = async () => {
-    this.setState({
-      page: this.state.page-1
-    })
-    let url =
-    `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=e0915fa6d785405690bceaab3b54c2c7&page=${this.state.page-1}&pageSize=20&category=${this.props.category}`;
-    this.setState({
-      loading: true
-    })
-  let response = await fetch(url);
-  let parsed = await response.json();
-  this.setState({
-    articles: parsed.articles,
-    totalArticles: parsed.totalArticles,
-  });
-  this.setState({loading: false})
+    let url =`https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=e0915fa6d785405690bceaab3b54c2c7&page=${this.state.page-1}&pageSize=20&category=${this.props.category}`;
+    this.setState({page: this.state.page-1})
+    this.setState({loading: true})
+    let response = await fetch(url);
+    let parsed = await response.json();
+    this.setState({articles: parsed.articles,totalArticles: parsed.totalArticles,});
+    this.setState({loading: false})
   };
 
   handleNext = async () => {
@@ -82,6 +71,8 @@ export default class News extends Component {
                     description={e.description}
                     url={e.urlToImage}
                     newsURL={e.url}
+                    author={e.author}
+                    date={e.publishedAt}
                   />
                 </div>
               );
