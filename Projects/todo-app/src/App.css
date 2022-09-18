@@ -1,0 +1,14 @@
+.item {
+    border: 2px solid black;
+    border-radius: 9px;
+    padding: 5px;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+img {
+    height: 30px;
+    width: 25px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
