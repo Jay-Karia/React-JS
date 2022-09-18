@@ -12,3 +12,18 @@ img {
     margin-bottom: 20px;
     cursor: pointer;
 }
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.cont {
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 20px
+}
+
+.desc {
+    height: 40px;
+    resize: none;
+}

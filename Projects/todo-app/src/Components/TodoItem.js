@@ -12,5 +12,5 @@ export default function TodoItem(props) {
                 </div>
             </div>
         </>
-    );
+    )
 }
