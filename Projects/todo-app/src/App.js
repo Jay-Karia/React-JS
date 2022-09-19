@@ -12,27 +12,34 @@ function App() {
         }
         stTodos.push([
             {
+                key: stTodos.length,
                 title: document.getElementsByClassName("title")[0].value,
                 description: document.getElementsByClassName("desc")[0].value,
+                completed: false
             },
         ]);
         localStorage.setItem("todos", JSON.stringify(stTodos));
         setTodos(stTodos)
 
-        document.getElementsByClassName("btn")[0].innerHTML = "✓";
-        document.getElementsByClassName("btn")[0].style.backgroundColor =
+        document.getElementsByClassName("addBTN")[0].innerHTML = "✓";
+        document.getElementsByClassName("addBTN")[0].style.backgroundColor =
             "#14A44D";
         document.getElementsByClassName("title")[0].value = "";
         document.getElementsByClassName("desc")[0].value = "";
 
         setTimeout(() => {
-            document.getElementsByClassName("btn")[0].innerHTML = "+";
-            document.getElementsByClassName("btn")[0].style.backgroundColor =
+            document.getElementsByClassName("addBTN")[0].innerHTML = "+";
+            document.getElementsByClassName("addBTN")[0].style.backgroundColor =
                 "#332D2D";
+                document.getElementsByClassName("wd1")[0].innerHTML = 20
+                document.getElementsByClassName("wd")[0].innerHTML = 75
         }, 2000);
     };
 
-    let storageTodos = localStorage.getItem("todo");
+    const [title, setTitle]=  useState("")
+    const [desc, setDesc]=  useState("")
+
+    let storageTodos = JSON.parse(localStorage.getItem("todo"));
     if (storageTodos === null) {
         storageTodos = [];
     }
@@ -43,6 +50,20 @@ function App() {
         setTodos(todos);
         console.log(storageTodos);
     };
+
+    const handleOnChange = (event)=>{
+        setTitle(event.target.value)
+    }
+
+    const handleOnChange1 = (event)=>{
+        setDesc(event.target.value)
+    }
+
+    const edit = (no)=>{
+        storageTodos = storageTodos[no].completed = true
+        
+    }
+    // setTodos(storageTodos)
     return (
         <>
             <Navbar />
@@ -60,20 +81,24 @@ function App() {
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
                             placeholder="Todo Title"
+                            onChange={handleOnChange}
                         />
+                        <div className="btn wd1" style={{cursor:'default', border:'1px solid grey'}}>{20-title.length}</div>
                     </div>
                     <div className="input-group mb-3 " style={{ width: "50%" }}>
                         <textarea
                             type="text"
-                            maxLength={74}
+                            maxLength={75}
                             className="form-control desc"
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
                             placeholder="Todo Description"
+                            onChange={handleOnChange1}
                         />
+                        <div className="btn wd" style={{cursor:'default', border:'1px solid grey'}}>{75-desc.length}</div>
                     </div>
                     <div
-                        className="btn btn-dark mx-3"
+                        className="btn addBTN btn-dark mx-3"
                         style={{ height: "10%", border: "none" }}
                         onClick={handleAdd}
                     >
@@ -81,7 +106,7 @@ function App() {
                     </div>
                 </div>
             </div>
-            <Todos del={del} todos={todos} />
+            <Todos del={del} todos={todos} edit={edit}/>
             <Footer />
         </>
     );
