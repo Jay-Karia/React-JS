@@ -12,7 +12,7 @@ export default function TodoItem(props) {
                             <div style={{float:'right'}}>
                                 <img onClick={()=>{props.edit(props.todos[i].key)}} src={require('./edit.jpg')} alt="edit" style={{marginRight:'20px'}} />
                                 <img onClick={()=>{props.done(props.todo[i].key)}} src={require('./done.jpg')} alt="done" style={{marginRight:'20px'}} />
-                                <img src={require('./del.png')} alt="delete" />
+                                <img onClick={()=>{props.del(props.todo[i].key)}} src={require('./del.png')} alt="delete" />
                             </div>
                         </div>
                     })}

@@ -12,7 +12,7 @@ function App() {
     }
     
     let [todos, setTodos] = useState(storageTodos);
-    
+
     const handleAdd = () => {
         let stTodos = JSON.parse(localStorage.getItem("todos"));
         if (stTodos === null) {
@@ -58,15 +58,18 @@ function App() {
         setTodos(stTodos)
     }
 
+    const handleDelete = (id)=>{
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+        stTodos.splice(id, 1)
+        localStorage.setItem("todos", JSON.stringify(stTodos));
+        setTodos(stTodos)
+    }
+
     const [title, setTitle]=  useState("")
     const [desc, setDesc]=  useState("")
-
-
-    const del = (sr_no) => {
-        let deleted = todos.splice(sr_no - 1, 1);
-        setTodos(todos);
-        console.log(storageTodos);
-    };
 
     const handleOnChange = (event)=>{
         setTitle(event.target.value)
@@ -118,7 +121,7 @@ function App() {
                     </div>
                 </div>
             </div>
-            <Todos del={del} todos={todos} done={handleDone}/>
+            <Todos del={handleDelete} todos={todos} done={handleDone}/>
             <Footer />
         </>
     );
