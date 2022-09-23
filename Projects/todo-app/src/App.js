@@ -5,6 +5,14 @@ import Todos from "./Components/Todos";
 import { useState } from "react";
 
 function App() {
+
+    let storageTodos = JSON.parse(localStorage.getItem("todo"));
+    if (storageTodos === null) {
+        storageTodos = [];
+    }
+    
+    let [todos, setTodos] = useState(storageTodos);
+    
     const handleAdd = () => {
         let stTodos = JSON.parse(localStorage.getItem("todos"));
         if (stTodos === null) {
@@ -33,17 +41,26 @@ function App() {
                 "#332D2D";
                 document.getElementsByClassName("wd1")[0].innerHTML = 20
                 document.getElementsByClassName("wd")[0].innerHTML = 75
-        }, 2000);
+        }, 1000);
     };
+
+    const handleDone = (id)=>{
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+        if (stTodos[id][0].completed===true) {
+            stTodos[id][0].completed = false
+        } else if (stTodos[id][0].completed===false) {
+            stTodos[id][0].completed = true
+        }
+        localStorage.setItem("todos", JSON.stringify(stTodos));
+        setTodos(stTodos)
+    }
 
     const [title, setTitle]=  useState("")
     const [desc, setDesc]=  useState("")
 
-    let storageTodos = JSON.parse(localStorage.getItem("todo"));
-    if (storageTodos === null) {
-        storageTodos = [];
-    }
-    let [todos, setTodos] = useState(storageTodos);
 
     const del = (sr_no) => {
         let deleted = todos.splice(sr_no - 1, 1);
@@ -59,11 +76,6 @@ function App() {
         setDesc(event.target.value)
     }
 
-    const edit = (no)=>{
-        storageTodos = storageTodos[no].completed = true
-        
-    }
-    // setTodos(storageTodos)
     return (
         <>
             <Navbar />
@@ -106,7 +118,7 @@ function App() {
                     </div>
                 </div>
             </div>
-            <Todos del={del} todos={todos} edit={edit}/>
+            <Todos del={del} todos={todos} done={handleDone}/>
             <Footer />
         </>
     );
