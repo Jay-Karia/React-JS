@@ -13,7 +13,7 @@ export default function Todos(props) {
             
                 {props.todos.length===0?<h5 className="text-center text-danger my-5">No Todos to Display</h5>: props.todos.map((todo) => {
                     return (
-                        <TodoItem todo = {todo} del={props.del} done={props.done}/>
+                        <TodoItem todo = {todo} del={props.del} done={props.done} edit={props.edit}/>
                 )
                 })}
                 

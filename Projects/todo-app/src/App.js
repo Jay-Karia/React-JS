@@ -29,6 +29,9 @@ function App() {
         localStorage.setItem("todos", JSON.stringify(stTodos));
         setTodos(stTodos)
 
+        document.getElementsByClassName('desc')[0].style.backgroundColor = 'white'
+        document.getElementsByClassName('title')[0].style.backgroundColor = 'white'
+
         document.getElementsByClassName("addBTN")[0].innerHTML = "✓";
         document.getElementsByClassName("addBTN")[0].style.backgroundColor =
             "#14A44D";
@@ -71,6 +74,21 @@ function App() {
         }
         localStorage.setItem("todos", JSON.stringify(stTodos));
         setTodos(stTodos)
+    }
+
+    const handleEdit = (id)=>{
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+        for (let i=0;i<stTodos.length;i++) {
+            if (stTodos[i][0].key===id) {
+                document.getElementsByClassName('title')[0].value = stTodos[i][0].title
+                document.getElementsByClassName('title')[0].style.backgroundColor = 'hsl(195, 100%, 95%)'
+                document.getElementsByClassName('desc')[0].value = stTodos[i][0].description
+                document.getElementsByClassName('desc')[0].style.backgroundColor = 'hsl(195, 100%, 95%)'
+            }
+        }
     }
 
     const [title, setTitle]=  useState("")
@@ -126,7 +144,7 @@ function App() {
                     </div>
                 </div>
             </div>
-            <Todos del={handleDelete} todos={todos} done={handleDone}/>
+            <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit}/>
             <Footer />
         </>
     );
