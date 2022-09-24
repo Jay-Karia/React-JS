@@ -63,7 +63,12 @@ function App() {
         if (stTodos === null) {
             stTodos = [];
         }
-        stTodos.splice(id, 1)
+        
+
+        for (let i=0;i<stTodos.length;i++) {
+            if (stTodos[i][0].key===id)
+            stTodos.splice(i, 1)
+        }
         localStorage.setItem("todos", JSON.stringify(stTodos));
         setTodos(stTodos)
     }
