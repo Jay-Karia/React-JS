@@ -12,7 +12,7 @@ function App() {
     
     let [todos, setTodos] = useState(storageTodos);
     const [len, setLen] = useState(storageTodos.length)
-    let len2 = storageTodos.length
+    // let len2 = storageTodos.length
     // console.log(len);
 
 
@@ -59,14 +59,10 @@ function App() {
         
         if (stTodos[id][0].completed===true) {
             stTodos[id][0].completed = false
-            // len = len+1
-            setLen(len2+1)
-            // console.log(len);
+            setLen(len+1)
         } else if (stTodos[id][0].completed===false) {
             stTodos[id][0].completed = true
-            // len = len-1
-            setLen(len2-1)
-            // console.log(len);
+            setLen(len-1)
         }
         localStorage.setItem("todos", JSON.stringify(stTodos));
         setTodos(stTodos)
