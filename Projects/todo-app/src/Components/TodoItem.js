@@ -8,7 +8,7 @@ export default function TodoItem(props) {
                 
                     {props.todo.map((e, i)=>{
                         return  <div className='item' style={{backgroundColor: props.todo[i].completed===true?'hsl(150, 60%, 85%)':'white'}} >
-                        <strong>{props.todo[i].title}</strong> {props.todo[i].description}
+                        <strong className="todoTitle">{props.todo[i].title}</strong> <span className="todoDesc">{props.todo[i].description}</span>
                             <div style={{float:'right'}}>
                                 <img onClick={()=>{props.edit(props.todo[i].key)}} src={require('../edit.jpg')} alt="edit" style={{marginRight:'20px'}} />
                                 <img onClick={()=>{props.done(props.todo[i].key)}} src={require('../done.jpg')} alt="done" style={{marginRight:'20px'}} />
