@@ -13,9 +13,13 @@ function App() {
     }
     
     let [todos, setTodos] = useState(storageTodos);
-    const [len, setLen] = useState(storageTodos.length)
-    // let len2 = storageTodos.length
-    // console.log(len);
+    let length_ = 0;
+    for (let i=0;i<storageTodos.length;i++) {
+        if (storageTodos[i][0].completed===false) {
+            length_ = length_+1
+        }
+    }
+    const [len, setLen] = useState(length_)
 
 
     const handleAdd = () => {
@@ -64,13 +68,20 @@ function App() {
                 stTodos[id][0].completed = false
                 setLen(len+1)
                 let t = ""
-                if (len+1>1) t = "todos"
+                if ((len+1)>1) t = "todos"
                 else t = "todo"
-                document.getElementsByClassName('text-success')[0].innerHTML = len+1+" "
+                document.getElementsByClassName('bold')[0].innerHTML = (len+1)+" "
                 document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
             } else if (stTodos[id][0].completed===false) {
                 stTodos[id][0].completed = true
                 setLen(len-1)
+                let t = ""
+                if ((len-1)>1) t = "todos"
+                else t = "todo"
+                document.getElementsByClassName('bold')[0].innerHTML = (len-1)+" "
+                document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
+
+                // console.log(len);
             }
             localStorage.setItem("todos", JSON.stringify(stTodos));
             setTodos(stTodos)
@@ -133,18 +144,49 @@ function App() {
             if (stTodos[i][0].completed===true) {
                 completedTodos.push(stTodos[i])
                 setTodos(completedTodos)
-                document.getElementsByClassName('text-success')[0].innerHTML = "Completed"
+                document.getElementsByClassName('bold')[0].innerHTML = "Completed"
+                document.getElementsByClassName('bold')[0].style.color = "#5cb85c"
                 document.getElementsByClassName('sentence')[0].innerHTML = " tasks"
             }
         }
 
     }
 
+    const allTasks = ()=>{
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+        let t = ""
+        if (len>1) t = "todos"
+        else t = "todo"
+        document.getElementsByClassName('bold')[0].innerHTML = len+" "
+        document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
+        document.getElementsByClassName('bold')[0].style.color = "#5cb85c"
+        setTodos(stTodos)
+    }
+
+    const remaining = ()=> {
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+        for (let i=0;i<stTodos.length;i++) {
+            if (stTodos[i][0].completed===false) {
+                completedTodos.push(stTodos[i])
+                setTodos(completedTodos)
+                document.getElementsByClassName('bold')[0].innerHTML = "Remaining"
+                document.getElementsByClassName('bold')[0].style.color = "#d9534f"
+                document.getElementsByClassName('sentence')[0].innerHTML = " tasks"
+            }
+        }
+    }
+
     return (
         <>
             <Navbar />
             <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd}/>
-            <Filters completed={completedTasks}/>
+            <Filters completed={completedTasks} allTasks={allTasks} remaining={remaining}/>
             <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit} len={len}/>
             <Footer />
         </>

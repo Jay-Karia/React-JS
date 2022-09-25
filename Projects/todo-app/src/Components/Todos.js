@@ -11,7 +11,7 @@ export default function Todos(props) {
             <h1 className="text-center class1">Your Todos List</h1>
             {props.todos.length!==0?
             <>
-            <h3 className="text-center my-5 text"><strong className="text-success">{props.len} </strong><span className="sentence">{props.len>1?"todos":"todo"} remaining</span></h3>
+            <h3 className="text-center my-5 text"><strong className="bold">{props.len} </strong><span className="sentence">{props.len>1?"todos":"todo"} remaining</span></h3>
             </>
             :""}
             
