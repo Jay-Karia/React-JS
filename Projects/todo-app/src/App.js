@@ -21,41 +21,59 @@ function App() {
     }
     const [len, setLen] = useState(length_)
 
+    const [isEditing, setEditing] = useState(false)
+    const [id, setId] = useState(0)
 
     const handleAdd = () => {
         let stTodos = JSON.parse(localStorage.getItem("todos"));
         if (stTodos === null) {
             stTodos = [];
         }
-        stTodos.push([
-            {
-                key: stTodos.length,
-                title: document.getElementsByClassName("title")[0].value,
-                description: document.getElementsByClassName("desc")[0].value,
-                completed: false
-            },
-        ]);
-        localStorage.setItem("todos", JSON.stringify(stTodos));
-        setTodos(stTodos)
-        setLen(len+1)
-        window.length = stTodos.length
+        if (isEditing===false) {
+            stTodos.push([
+                {
+                    key: stTodos.length,
+                    title: document.getElementsByClassName("title")[0].value,
+                    description: document.getElementsByClassName("desc")[0].value,
+                    completed: false
+                },
+            ]);
+            localStorage.setItem("todos", JSON.stringify(stTodos));
+            setTodos(stTodos)
+            setLen(len+1)
+            window.length = stTodos.length
+            
+            document.getElementsByClassName('desc')[0].style.backgroundColor = 'white'
+            document.getElementsByClassName('title')[0].style.backgroundColor = 'white'
+    
+            document.getElementsByClassName("addBTN")[0].innerHTML = "✓";
+            document.getElementsByClassName("addBTN")[0].style.backgroundColor =
+                "#14A44D";
+            document.getElementsByClassName("title")[0].value = "";
+            document.getElementsByClassName("desc")[0].value = "";
 
-        document.getElementsByClassName('desc')[0].style.backgroundColor = 'white'
-        document.getElementsByClassName('title')[0].style.backgroundColor = 'white'
+        } else {
+            document.getElementsByClassName('todoTitle')[id].innerHTML = document.getElementsByClassName('title')[0].value
+            document.getElementsByClassName('todoDesc')[id].innerHTML = document.getElementsByClassName('desc')[0].value
+            for (let i=0;i<stTodos.length;i++) {
+                if (stTodos[i][0].key===id) {
+                    stTodos[i][0].title = document.getElementsByClassName('title')[0].value
+                    stTodos[i][0].description = document.getElementsByClassName('desc')[0].value
+                    // console.log(stTodos);
+                    setTodos(stTodos)
+                }
+            }
+        }
 
-        document.getElementsByClassName("addBTN")[0].innerHTML = "✓";
-        document.getElementsByClassName("addBTN")[0].style.backgroundColor =
-            "#14A44D";
-        document.getElementsByClassName("title")[0].value = "";
-        document.getElementsByClassName("desc")[0].value = "";
-
+        
         setTimeout(() => {
             document.getElementsByClassName("addBTN")[0].innerHTML = "+";
             document.getElementsByClassName("addBTN")[0].style.backgroundColor =
                 "#332D2D";
                 document.getElementsByClassName("wd1")[0].innerHTML = 20
                 document.getElementsByClassName("wd")[0].innerHTML = 75
-        }, 1000);
+            }, 1000);
+            setEditing(false)
     }
 
     const handleDone = (id)=>{
@@ -115,10 +133,12 @@ function App() {
         }
         for (let i=0;i<stTodos.length;i++) {
             if (stTodos[i][0].key===id) {
-                document.getElementsByClassName('title')[0].value = stTodos[i][0].title
-                document.getElementsByClassName('title')[0].style.backgroundColor = 'hsl(195, 100%, 95%)'
+                document.getElementsByClassName('title')[0].value= stTodos[i][0].title
+                document.getElementsByClassName('title')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
                 document.getElementsByClassName('desc')[0].value = stTodos[i][0].description
-                document.getElementsByClassName('desc')[0].style.backgroundColor = 'hsl(195, 100%, 95%)'
+                document.getElementsByClassName('desc')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
+                setEditing(true)
+                setId(id)
             }
         }
     }
