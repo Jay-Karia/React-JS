@@ -3,6 +3,8 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Todos from "./Components/Todos";
 import { useState } from "react";
+import Filters from "./Components/Filters";
+import AddTodo from "./Components/AddTodo";
 
 function App() {
     let storageTodos = JSON.parse(localStorage.getItem("todos"));
@@ -31,6 +33,7 @@ function App() {
         ]);
         localStorage.setItem("todos", JSON.stringify(stTodos));
         setTodos(stTodos)
+        setLen(len+1)
         window.length = stTodos.length
 
         document.getElementsByClassName('desc')[0].style.backgroundColor = 'white'
@@ -56,16 +59,23 @@ function App() {
         if (stTodos === null) {
             stTodos = [];
         }
-        
-        if (stTodos[id][0].completed===true) {
-            stTodos[id][0].completed = false
-            setLen(len+1)
-        } else if (stTodos[id][0].completed===false) {
-            stTodos[id][0].completed = true
-            setLen(len-1)
-        }
-        localStorage.setItem("todos", JSON.stringify(stTodos));
-        setTodos(stTodos)
+        try {
+            if (stTodos[id][0].completed===true) {
+                stTodos[id][0].completed = false
+                setLen(len+1)
+                let t = ""
+                if (len+1>1) t = "todos"
+                else t = "todo"
+                document.getElementsByClassName('text-success')[0].innerHTML = len+1+" "
+                document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
+            } else if (stTodos[id][0].completed===false) {
+                stTodos[id][0].completed = true
+                setLen(len-1)
+            }
+            localStorage.setItem("todos", JSON.stringify(stTodos));
+            setTodos(stTodos)
+
+        } catch{}
     }
 
     const handleDelete = (id)=>{
@@ -76,8 +86,12 @@ function App() {
         
 
         for (let i=0;i<stTodos.length;i++) {
-            if (stTodos[i][0].key===id)
-            stTodos.splice(i, 1)
+            if (stTodos[i][0].key===id) {
+                if (stTodos[i][0].completed===false) {
+                    setLen(len-1)
+                }
+                stTodos.splice(i, 1)
+            }
         }
         localStorage.setItem("todos", JSON.stringify(stTodos));
         setTodos(stTodos)
@@ -108,49 +122,29 @@ function App() {
     const handleOnChange1 = (event)=>{
         setDesc(event.target.value)
     }
+    let completedTodos = []
+
+    const completedTasks = ()=> {
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+        for (let i=0;i<stTodos.length;i++) {
+            if (stTodos[i][0].completed===true) {
+                completedTodos.push(stTodos[i])
+                setTodos(completedTodos)
+                document.getElementsByClassName('text-success')[0].innerHTML = "Completed"
+                document.getElementsByClassName('sentence')[0].innerHTML = " tasks"
+            }
+        }
+
+    }
 
     return (
         <>
             <Navbar />
-            <div className="container my-5">
-                <h1 className="text-center my-5">Add a Todo</h1>
-                <div className=" d-flex">
-                    <div
-                        className="input-group mb-3 mx-2 "
-                        style={{ width: "30%" }}
-                    >
-                        <input
-                            maxLength={20}
-                            type="text"
-                            className="form-control title"
-                            aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default"
-                            placeholder="Todo Title"
-                            onChange={handleOnChange}
-                        />
-                        <div className="btn wd1" style={{cursor:'default', border:'1px solid grey'}}>{20-title.length}</div>
-                    </div>
-                    <div className="input-group mb-3 " style={{ width: "50%" }}>
-                        <textarea
-                            type="text"
-                            maxLength={75}
-                            className="form-control desc"
-                            aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default"
-                            placeholder="Todo Description"
-                            onChange={handleOnChange1}
-                        />
-                        <div className="btn wd" style={{cursor:'default', border:'1px solid grey'}}>{75-desc.length}</div>
-                    </div>
-                    <div
-                        className="btn addBTN btn-dark mx-3"
-                        style={{ height: "10%", border: "none" }}
-                        onClick={handleAdd}
-                    >
-                        +
-                    </div>
-                </div>
-            </div>
+            <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd}/>
+            <Filters completed={completedTasks}/>
             <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit} len={len}/>
             <Footer />
         </>

@@ -28,3 +28,46 @@ img {
     height: 40px;
     resize: none;
 }
+
+.item:hover {
+    box-shadow: 0 0 2px 2px grey;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    border: 2px solid black;
+    padding: 10px;
+    border-radius: 9px;
+    font-weight: bolder;
+}
+
+.button-1 {
+    background-color: #0275d8;
+}
+
+.button-1:hover {
+    background-color: #5bc0de;
+    cursor: pointer;
+}
+
+.button-2 {
+    background-color: #5cb85c;
+}
+
+.button-2:hover {
+    background-color: hsl(130, 49%, 72%);
+    cursor: pointer;
+}
+
+.button-3 {
+    background-color: #d9534f;
+}
+
+.button-3:hover {
+    background-color: hsl(29, 78%, 73%);
+    cursor: pointer;
+}
