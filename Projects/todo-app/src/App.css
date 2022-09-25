@@ -4,6 +4,7 @@
     padding: 5px;
     font-size: 20px;
     padding-left: 10px;
+    transition: all .2s ease-in;
 }
 
 img {
@@ -30,7 +31,10 @@ img {
 }
 
 .item:hover {
-    box-shadow: 0 0 2px 2px grey;
+    box-shadow: 0 0 4px 4px grey;
+    transition: all .2s ease-in;
+    /* background-color: grey; */
+    /* background-color: hsl(0, 0%, 75%); */
 }
 
 .filters {
@@ -43,6 +47,11 @@ img {
     padding: 10px;
     border-radius: 9px;
     font-weight: bolder;
+    transition: all .2s ease-in;
+}
+
+.button:hover {
+    transition: all .2s ease-in;
 }
 
 .button-1 {
@@ -70,4 +79,9 @@ img {
 .button-3:hover {
     background-color: hsl(29, 78%, 73%);
     cursor: pointer;
+}
+
+h3 {
+    padding: 5px;
+    border-radius: 9px;
 }
