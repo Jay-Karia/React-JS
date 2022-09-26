@@ -143,7 +143,7 @@ function App() {
                 document.getElementsByClassName('desc')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
 
                 document.getElementsByClassName('item')[id].style.backgroundColor = "hsl(0, 0%, 85%)"
-
+                document.getElementsByClassName('addBTN')[0].innerHTML = "↻"
                 setEditing(true)
                 setId(id)
             }
