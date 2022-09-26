@@ -42,9 +42,6 @@ function App() {
             setTodos(stTodos)
             setLen(len+1)
             window.length = stTodos.length
-            
-            document.getElementsByClassName('desc')[0].style.backgroundColor = 'white'
-            document.getElementsByClassName('title')[0].style.backgroundColor = 'white'
     
             document.getElementsByClassName("addBTN")[0].innerHTML = "✓";
             document.getElementsByClassName("addBTN")[0].style.backgroundColor =
@@ -59,7 +56,14 @@ function App() {
                 if (stTodos[i][0].key===id) {
                     stTodos[i][0].title = document.getElementsByClassName('title')[0].value
                     stTodos[i][0].description = document.getElementsByClassName('desc')[0].value
-                    // console.log(stTodos);
+
+                    document.getElementsByClassName('item')[id].style.backgroundColor = "white"
+                    document.getElementsByClassName('desc')[0].style.backgroundColor = 'white'
+                    document.getElementsByClassName('title')[0].style.backgroundColor = 'white'
+                    document.getElementsByClassName('title')[0].value = ""
+                    document.getElementsByClassName('desc')[0].value = ""
+
+                    localStorage.setItem("todos", JSON.stringify(stTodos));
                     setTodos(stTodos)
                 }
             }
@@ -137,6 +141,9 @@ function App() {
                 document.getElementsByClassName('title')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
                 document.getElementsByClassName('desc')[0].value = stTodos[i][0].description
                 document.getElementsByClassName('desc')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
+
+                document.getElementsByClassName('item')[id].style.backgroundColor = "hsl(0, 0%, 85%)"
+
                 setEditing(true)
                 setId(id)
             }
