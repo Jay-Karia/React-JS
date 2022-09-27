@@ -19,6 +19,7 @@ function App() {
             length_ = length_+1
         }
     }
+
     const [len, setLen] = useState(length_)
 
     const [isEditing, setEditing] = useState(false)
@@ -35,6 +36,7 @@ function App() {
                     key: stTodos.length,
                     title: document.getElementsByClassName("title")[0].value,
                     description: document.getElementsByClassName("desc")[0].value,
+                    due: document.getElementsByClassName('due')[0].value,
                     completed: false
                 },
             ]);
@@ -49,6 +51,8 @@ function App() {
             document.getElementsByClassName("title")[0].value = "";
             document.getElementsByClassName("desc")[0].value = "";
 
+            document.getElementsByClassName('addContainer')[0].style.boxShadow = "0 2px 2px 0 green"
+
         } else {
             document.getElementsByClassName('todoTitle')[id].innerHTML = document.getElementsByClassName('title')[0].value
             document.getElementsByClassName('todoDesc')[id].innerHTML = document.getElementsByClassName('desc')[0].value
@@ -56,6 +60,7 @@ function App() {
                 if (stTodos[i][0].key===id) {
                     stTodos[i][0].title = document.getElementsByClassName('title')[0].value
                     stTodos[i][0].description = document.getElementsByClassName('desc')[0].value
+                    stTodos[i][0].due = document.getElementsByClassName('due')[0].value
 
                     document.getElementsByClassName('item')[id].style.backgroundColor = "white"
                     document.getElementsByClassName('desc')[0].style.backgroundColor = 'white'
@@ -74,8 +79,9 @@ function App() {
             document.getElementsByClassName("addBTN")[0].innerHTML = "+";
             document.getElementsByClassName("addBTN")[0].style.backgroundColor =
                 "#332D2D";
-                document.getElementsByClassName("wd1")[0].innerHTML = 20
-                document.getElementsByClassName("wd")[0].innerHTML = 75
+                document.getElementsByClassName("wd1")[0].innerHTML = 50
+                document.getElementsByClassName("wd")[0].innerHTML = 80
+                document.getElementsByClassName('addContainer')[0].style.boxShadow = "0 2px 2px 0 grey"
             }, 1000);
             setEditing(false)
     }
@@ -94,6 +100,16 @@ function App() {
                 else t = "todo"
                 document.getElementsByClassName('bold')[0].innerHTML = (len+1)+" "
                 document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
+
+                let date = Math.round((new Date(stTodos[id][0].due).getTime()-new Date().getTime())/(1000*60*60*24))
+                let color;
+                if (date+1>5) color="green"
+                else color = "orangered"
+                
+                if (date <=0) date = "today"
+                else date = (date+1)+"d"
+                document.getElementsByClassName('dueDate')[id].innerHTML = "• Due "+date
+                document.getElementsByClassName('dueDate')[id].style.color = color
             } else if (stTodos[id][0].completed===false) {
                 stTodos[id][0].completed = true
                 setLen(len-1)
@@ -102,6 +118,9 @@ function App() {
                 else t = "todo"
                 document.getElementsByClassName('bold')[0].innerHTML = (len-1)+" "
                 document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
+
+                document.getElementsByClassName('dueDate')[id].innerHTML = "Done"
+                document.getElementsByClassName('dueDate')[id].style.color = "green"
 
                 // console.log(len);
             }
@@ -138,8 +157,10 @@ function App() {
         for (let i=0;i<stTodos.length;i++) {
             if (stTodos[i][0].key===id) {
                 document.getElementsByClassName('title')[0].value= stTodos[i][0].title
-                document.getElementsByClassName('title')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
                 document.getElementsByClassName('desc')[0].value = stTodos[i][0].description
+                document.getElementsByClassName('due')[0].value = stTodos[i][0].due
+
+                document.getElementsByClassName('title')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
                 document.getElementsByClassName('desc')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
 
                 document.getElementsByClassName('item')[id].style.backgroundColor = "hsl(0, 0%, 85%)"
@@ -193,7 +214,7 @@ function App() {
         setTodos(stTodos)
     }
 
-    const remaining = ()=> {
+    const remainingTasks = ()=> {
         let stTodos = JSON.parse(localStorage.getItem("todos"));
         if (stTodos === null) {
             stTodos = [];
@@ -213,7 +234,7 @@ function App() {
         <>
             <Navbar />
             <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd}/>
-            <Filters completed={completedTasks} allTasks={allTasks} remaining={remaining}/>
+            <Filters completed={completedTasks} allTasks={allTasks} remaining={remainingTasks}/>
             <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit} len={len}/>
             <Footer />
         </>
