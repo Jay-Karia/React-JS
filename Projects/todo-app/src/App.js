@@ -62,7 +62,9 @@ function App() {
                     stTodos[i][0].description = document.getElementsByClassName('desc')[0].value
                     stTodos[i][0].due = document.getElementsByClassName('due')[0].value
 
-                    document.getElementsByClassName('item')[id].style.backgroundColor = "white"
+                    document.getElementsByClassName('todoDesc')[id].style.backgroundColor = "white"
+                    document.getElementsByClassName('card-header')[id].style.backgroundColor = "white"
+
                     document.getElementsByClassName('desc')[0].style.backgroundColor = 'white'
                     document.getElementsByClassName('title')[0].style.backgroundColor = 'white'
                     document.getElementsByClassName('title')[0].value = ""
@@ -103,13 +105,31 @@ function App() {
 
                 let date = Math.round((new Date(stTodos[id][0].due).getTime()-new Date().getTime())/(1000*60*60*24))
                 let color;
-                if (date+1>5) color="green"
-                else color = "orangered"
+                let bg_color
+                if (date+1>5) {
+                    color= "14A44D"
+                    bg_color = "hsl(150, 50%, 80%)"
+                }
+                else{
+                    color = "#CC0000" 
+                    bg_color = "hsl(40, 50%, 80%)"
+                } 
                 
-                if (date <=0) date = "today"
-                else date = (date+1)+"d"
-                document.getElementsByClassName('dueDate')[id].innerHTML = "• Due "+date
+                if (date ===0){
+                    date = "today"
+                    document.getElementsByClassName('dueDate')[id].innerHTML = "• Due "+date
+                } 
+                else if (isNaN(date) || date<0) {
+                    date="• No Due Date"
+                    document.getElementsByClassName('dueDate')[id].innerHTML = date
+                } 
+                else {
+                    date = (date+1)+"d"
+                    document.getElementsByClassName('dueDate')[id].innerHTML = "• Due "+date
+                } 
                 document.getElementsByClassName('dueDate')[id].style.color = color
+
+
             } else if (stTodos[id][0].completed===false) {
                 stTodos[id][0].completed = true
                 setLen(len-1)
@@ -121,8 +141,6 @@ function App() {
 
                 document.getElementsByClassName('dueDate')[id].innerHTML = "Done"
                 document.getElementsByClassName('dueDate')[id].style.color = "green"
-
-                // console.log(len);
             }
             localStorage.setItem("todos", JSON.stringify(stTodos));
             setTodos(stTodos)
@@ -163,7 +181,10 @@ function App() {
                 document.getElementsByClassName('title')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
                 document.getElementsByClassName('desc')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
 
-                document.getElementsByClassName('item')[id].style.backgroundColor = "hsl(0, 0%, 85%)"
+                document.getElementsByClassName('todoDesc')[id].style.backgroundColor = "hsl(0, 0%, 85%)"
+                document.getElementsByClassName('card-header')[id].style.backgroundColor = "hsl(0, 0%, 85%)"
+
+
                 document.getElementsByClassName('addBTN')[0].innerHTML = "↻"
                 setEditing(true)
                 setId(id)
@@ -230,10 +251,28 @@ function App() {
         }
     }
 
+    const [collapsed, setCollapse] = useState(false)
+
+    const toggleCollapse = ()=>{
+        if (collapsed) {
+            document.getElementsByClassName("addContainer")[0].style.height = "300px"
+            document.getElementsByClassName("addContainer")[0].style.display = "block"
+
+            document.getElementsByClassName("collapse_btn")[0].innerHTML = "⬆"
+            setCollapse(false)
+        } else {
+            document.getElementsByClassName("addContainer")[0].style.height = "0"
+            document.getElementsByClassName("addContainer")[0].style.display = "none"
+
+            document.getElementsByClassName("collapse_btn")[0].innerHTML = "⬇"
+            setCollapse(true)
+        }
+    }
+
     return (
         <>
             <Navbar />
-            <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd}/>
+            <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd} toggleCollapse={toggleCollapse}/>
             <Filters completed={completedTasks} allTasks={allTasks} remaining={remainingTasks}/>
             <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit} len={len}/>
             <Footer />
