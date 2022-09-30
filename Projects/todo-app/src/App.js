@@ -37,7 +37,8 @@ function App() {
                     title: document.getElementsByClassName("title")[0].value,
                     description: document.getElementsByClassName("desc")[0].value,
                     due: document.getElementsByClassName('due')[0].value,
-                    completed: false
+                    completed: false,
+                    category: document.getElementById('category').selectedIndex.value
                 },
             ]);
             localStorage.setItem("todos", JSON.stringify(stTodos));
@@ -61,6 +62,7 @@ function App() {
                     stTodos[i][0].title = document.getElementsByClassName('title')[0].value
                     stTodos[i][0].description = document.getElementsByClassName('desc')[0].value
                     stTodos[i][0].due = document.getElementsByClassName('due')[0].value
+                    stTodos[i][0].category = document.getElementById('category')[0].value
 
                     document.getElementsByClassName('todoDesc')[id].style.backgroundColor = "white"
                     document.getElementsByClassName('card-header')[id].style.backgroundColor = "white"
@@ -69,6 +71,7 @@ function App() {
                     document.getElementsByClassName('title')[0].style.backgroundColor = 'white'
                     document.getElementsByClassName('title')[0].value = ""
                     document.getElementsByClassName('desc')[0].value = ""
+                    document.getElementsByClassName('cat')[0].value = ""
 
                     localStorage.setItem("todos", JSON.stringify(stTodos));
                     setTodos(stTodos)
@@ -111,7 +114,7 @@ function App() {
                     bg_color = "hsl(150, 50%, 80%)"
                 }
                 else{
-                    color = "#CC0000" 
+                    color = "orangered" 
                     bg_color = "hsl(40, 50%, 80%)"
                 } 
                 

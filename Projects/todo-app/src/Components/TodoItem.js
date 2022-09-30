@@ -15,10 +15,9 @@ export default function TodoItem(props) {
                                 <p className="card-text">{props.todo[i].description}</p>
                             </div>
                             <hr />
-                            <div className="my-2 d2" style={{color: Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))>5 || props.todo[i].completed===true?"green":"#CC0000"}}>
+                            <div className="my-2 d2" style={{color: Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))>5 || props.todo[i].completed===true?"green":"orangered"}}>
                             <strong className="dueDate">
-                            {/* {props.todo[i].completed===false?Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))===0?"• Due today":"• Due "+Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))+'d':"Done"} */}
-                            { isNaN(Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24)))===true||Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))<0 ?"• No due date": props.todo[i].completed===false?Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))===0?"• Due today":"• Due "+Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))+'d':"Done"}
+                            { isNaN(Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))+1)===true||Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24)+1)<0 ?"• No due date": props.todo[i].completed===false?Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24)+1)===0?"• Due today":"• Due "+Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24)+1)+'d':"Done"}
                             </strong>
                             
                             </div>

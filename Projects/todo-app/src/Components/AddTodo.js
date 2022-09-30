@@ -74,29 +74,27 @@ export default function AddTodo(props) {
                         >
                             <label htmlFor="due">Category</label>
                         </div>
+                    <div>
+                    <select name="category" id="category" className="form-control mx-2" aria-label="Default select example">
+                            <option value="1" style={{backgroundColor: '#ffc107', fontSize:'1rem', fontFamily:'Arial'}}>Work</option>
+                            <option value="2" style={{backgroundColor: '#198754', color:'white' , fontSize:'1.2rem', fontFamily:'Arial'}}>Entertainment</option>
+                            <option value="3" style={{backgroundColor: '#0d6efd', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Travel</option>
+                            <option value="4" style={{backgroundColor: 'orangered', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Food</option>
+                            <option value="5" style={{backgroundColor: '#dc3545', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Urgent</option>
+                        </select>
+                    </div>
                         <input
                             maxLength={30}
                             type="text"
-                            className="form-control cat"
+                            className="form-control cat mx-2"
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
                         />
+                        
                          <div
                         className="btn btn-dark"
-                        style={{ height: 'auto', border: "none"}}
-                        // onClick={props.handleAdd}
-                    >
+                        style={{ height: 'auto', border: "none"}}>
                         +
-                    </div>
-                        
-                    <div>
-                    <select name="category" id="category" className="form-control mx-2" aria-label="Default select example">
-                            <option value="1" style={{backgroundColor: '#ffc107'}}>Work</option>
-                            <option value="2" style={{backgroundColor: '#198754', color:'white'}}>Entertainment</option>
-                            <option value="3" style={{backgroundColor: '#0d6efd', color:'white'}}>Travel</option>
-                            <option value="4" style={{backgroundColor: 'orangered', color:'white'}}>Food</option>
-                            <option value="5" style={{backgroundColor: '#dc3545', color:'white'}}>Urgent</option>
-                        </select>
                     </div>
                     </div>
                     <div
