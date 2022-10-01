@@ -259,13 +259,14 @@ function App() {
         if (stTodos === null) {
             stTodos = [];
         }
+        let filterdItems = []
         for (let i=0;i<stTodos.length;i++) {
             if (stTodos[i][0].completed===false) {
                 filterdItems.push(stTodos[i])
                 setTodos(filterdItems)
                 document.getElementsByClassName('bold')[0].innerHTML = "Remaining"
                 document.getElementsByClassName('bold')[0].style.color = "#d9534f"
-                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+completedTodos.length+")"
+                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
                 document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
             }
         }
@@ -312,7 +313,6 @@ function App() {
         <>
             <Navbar />
             <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd} toggleCollapse={toggleCollapse}/>
-            <Filters completed={completedTasks} allTasks={allTasks} remaining={remainingTasks}/>
             <Filters completed={completedTasks} allTasks={allTasks} remaining={remainingTasks} filterCategory={filterCategory}/>
             <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit} len={len} bg={bg}/>
             <Footer />
