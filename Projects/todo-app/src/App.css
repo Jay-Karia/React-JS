@@ -99,3 +99,24 @@ h3 {
     border-radius: 9px;
     margin-top: 20px;
 }
+
+.todoContainer {
+    display: grid;
+    grid-template-columns: 1fr 30fr;
+    grid-column-gap: 0;
+}
+
+.todoContainer .item {
+    width: 95%;
+    /* margin-left: 60px; */
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-left: 0;
+}
+
+.todoContainer .btn {
+    width: 50px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 2px solid black;
+}
