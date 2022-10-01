@@ -13,12 +13,25 @@ function App() {
     }
     
     let [todos, setTodos] = useState(storageTodos);
+    let [bg, setBg] = useState("")
     let length_ = 0;
     for (let i=0;i<storageTodos.length;i++) {
         if (storageTodos[i][0].completed===false) {
             length_ = length_+1
         }
+        // if (storageTodos[i][0].category.toLowerCase()==="work") setBg('yellow')
+        // else if (storageTodos[i][0].category.toLowerCase()==="travel") setBg('blue')
+        // else if (storageTodos[i][0].category.toLowerCase()==="food") setBg('orange')
+        // else if (storageTodos[i][0].category.toLowerCase()==="urgent") setBg('red')
+        // else if (storageTodos[i][0].category.toLowerCase()==="entertainment") setBg('green')
     }
+    // for (let i=0;i<storageTodos.length;i++) {
+    //     if (storageTodos[i][0].category.toLowerCase()==="work") setBg('yellow')
+    //     else if (storageTodos[i][0].category.toLowerCase()==="travel") setBg('blue')
+    //     else if (storageTodos[i][0].category.toLowerCase()==="food") setBg('orange')
+    //     else if (storageTodos[i][0].category.toLowerCase()==="urgent") setBg('red')
+    //     else if (storageTodos[i][0].category.toLowerCase()==="entertainment") setBg('green')
+    // }
 
     const [len, setLen] = useState(length_)
 
@@ -31,6 +44,8 @@ function App() {
             stTodos = [];
         }
         if (isEditing===false) {
+            let e = document.getElementById('category')
+            var cate = e.options[e.selectedIndex].text;
             stTodos.push([
                 {
                     key: stTodos.length,
@@ -38,7 +53,7 @@ function App() {
                     description: document.getElementsByClassName("desc")[0].value,
                     due: document.getElementsByClassName('due')[0].value,
                     completed: false,
-                    category: document.getElementById('category').selectedIndex.value
+                    category: cate.toLowerCase()
                 },
             ]);
             localStorage.setItem("todos", JSON.stringify(stTodos));
@@ -62,7 +77,7 @@ function App() {
                     stTodos[i][0].title = document.getElementsByClassName('title')[0].value
                     stTodos[i][0].description = document.getElementsByClassName('desc')[0].value
                     stTodos[i][0].due = document.getElementsByClassName('due')[0].value
-                    stTodos[i][0].category = document.getElementById('category')[0].value
+                    stTodos[i][0].category = document.getElementById('category').options[document.getElementById('category').selectedIndex].text.toLowerCase()
 
                     document.getElementsByClassName('todoDesc')[id].style.backgroundColor = "white"
                     document.getElementsByClassName('card-header')[id].style.backgroundColor = "white"
@@ -71,7 +86,7 @@ function App() {
                     document.getElementsByClassName('title')[0].style.backgroundColor = 'white'
                     document.getElementsByClassName('title')[0].value = ""
                     document.getElementsByClassName('desc')[0].value = ""
-                    document.getElementsByClassName('cat')[0].value = ""
+                    document.getElementById('category').options[document.getElementById('category').selectedIndex].text = "Work"
 
                     localStorage.setItem("todos", JSON.stringify(stTodos));
                     setTodos(stTodos)
@@ -180,6 +195,7 @@ function App() {
                 document.getElementsByClassName('title')[0].value= stTodos[i][0].title
                 document.getElementsByClassName('desc')[0].value = stTodos[i][0].description
                 document.getElementsByClassName('due')[0].value = stTodos[i][0].due
+                // document.getElementsByClassName('cat')[0].value = stTodos[i][0].category
 
                 document.getElementsByClassName('title')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
                 document.getElementsByClassName('desc')[0].style.backgroundColor = 'hsl(0, 0%, 95%)'
@@ -218,7 +234,7 @@ function App() {
                 setTodos(completedTodos)
                 document.getElementsByClassName('bold')[0].innerHTML = "Completed"
                 document.getElementsByClassName('bold')[0].style.color = "#5cb85c"
-                document.getElementsByClassName('sentence')[0].innerHTML = " tasks"
+                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+completedTodos.length+")"
             }
         }
 
@@ -249,7 +265,7 @@ function App() {
                 setTodos(completedTodos)
                 document.getElementsByClassName('bold')[0].innerHTML = "Remaining"
                 document.getElementsByClassName('bold')[0].style.color = "#d9534f"
-                document.getElementsByClassName('sentence')[0].innerHTML = " tasks"
+                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+completedTodos.length+")"
             }
         }
     }
@@ -271,13 +287,13 @@ function App() {
             setCollapse(true)
         }
     }
-
+   
     return (
         <>
             <Navbar />
             <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd} toggleCollapse={toggleCollapse}/>
             <Filters completed={completedTasks} allTasks={allTasks} remaining={remainingTasks}/>
-            <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit} len={len}/>
+            <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit} len={len} bg={bg}/>
             <Footer />
         </>
     );
