@@ -79,6 +79,51 @@ img {
     cursor: pointer;
 }
 
+.button-4 {
+    background-color: #ffc107;
+}
+
+.button-4:hover {
+    background-color: #ffe494;
+    cursor: pointer;
+}
+
+.button-5 {
+    background-color: #4e95ff;
+}
+
+.button-5:hover {
+    background-color: #99c2ff;
+    cursor: pointer;
+}
+
+.button-6 {
+    background-color: #fd7e14;
+}
+
+.button-6:hover {
+    background-color: hsl(29, 78%, 73%);
+    cursor: pointer;
+}
+
+.button-7 {
+    background-color: #dd6571;
+}
+
+.button-7:hover {
+    background-color: #ff8f9a;
+    cursor: pointer;
+}
+
+.button-8 {
+    background-color: #4bbe89;
+}
+
+.button-8:hover {
+    background-color: #a4ffd5;
+    cursor: pointer;
+}
+
 h3 {
     padding: 5px;
     border-radius: 9px;

@@ -86,7 +86,6 @@ function App() {
                     document.getElementsByClassName('title')[0].style.backgroundColor = 'white'
                     document.getElementsByClassName('title')[0].value = ""
                     document.getElementsByClassName('desc')[0].value = ""
-                    document.getElementById('category').options[document.getElementById('category').selectedIndex].text = "Work"
 
                     localStorage.setItem("todos", JSON.stringify(stTodos));
                     setTodos(stTodos)
@@ -221,7 +220,7 @@ function App() {
     const handleOnChange1 = (event)=>{
         setDesc(event.target.value)
     }
-    let completedTodos = []
+    let filterdItems = []
 
     const completedTasks = ()=> {
         let stTodos = JSON.parse(localStorage.getItem("todos"));
@@ -230,11 +229,11 @@ function App() {
         }
         for (let i=0;i<stTodos.length;i++) {
             if (stTodos[i][0].completed===true) {
-                completedTodos.push(stTodos[i])
-                setTodos(completedTodos)
+                filterdItems.push(stTodos[i])
+                setTodos(filterdItems)
                 document.getElementsByClassName('bold')[0].innerHTML = "Completed"
                 document.getElementsByClassName('bold')[0].style.color = "#5cb85c"
-                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+completedTodos.length+")"
+                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
             }
         }
 
@@ -261,11 +260,11 @@ function App() {
         }
         for (let i=0;i<stTodos.length;i++) {
             if (stTodos[i][0].completed===false) {
-                completedTodos.push(stTodos[i])
-                setTodos(completedTodos)
+                filterdItems.push(stTodos[i])
+                setTodos(filterdItems)
                 document.getElementsByClassName('bold')[0].innerHTML = "Remaining"
                 document.getElementsByClassName('bold')[0].style.color = "#d9534f"
-                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+completedTodos.length+")"
+                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
             }
         }
     }
@@ -287,12 +286,32 @@ function App() {
             setCollapse(true)
         }
     }
+
+    const filterCategory = (category, color)=> {
+        const capitalize = (word)=> {
+            let lower = word.toLowerCase()
+            return lower.charAt(0).toUpperCase() + lower.slice(1)
+        }
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+        for (let i=0;i<stTodos.length;i++) {
+            if (stTodos[i][0].category===category && stTodos[i][0].completed===false) {
+                filterdItems.push(stTodos[i])
+                setTodos(filterdItems)
+                document.getElementsByClassName('bold')[0].innerHTML = capitalize(category)
+                document.getElementsByClassName('bold')[0].style.color = color
+                document.getElementsByClassName('sentence')[0].innerHTML = " ("+filterdItems.length+")"
+            }
+        }
+    }
    
     return (
         <>
             <Navbar />
             <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd} toggleCollapse={toggleCollapse}/>
-            <Filters completed={completedTasks} allTasks={allTasks} remaining={remainingTasks}/>
+            <Filters completed={completedTasks} allTasks={allTasks} remaining={remainingTasks} filterCategory={filterCategory}/>
             <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit} len={len} bg={bg}/>
             <Footer />
         </>
