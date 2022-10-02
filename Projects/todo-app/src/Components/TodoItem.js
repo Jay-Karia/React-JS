@@ -1,11 +1,26 @@
 import React from "react";
-import { useState } from "react";
 
 export default function TodoItem(props) {
      let storageTodos = JSON.parse(localStorage.getItem("todos"));
     if (storageTodos === null) {
         storageTodos = [];
     }
+
+    let filters = JSON.parse(localStorage.getItem("filter"));
+    if (filters === null) {
+        filters = [];
+    }
+
+    let customCategories = []
+    let customColors = []
+    let customChars = []
+
+    for (let i=0;i<filters.length;i++) {
+        customCategories.push(filters[i].category.toLowerCase())
+        customColors.push(filters[i].color)
+        customChars.push(filters[i].char)
+    }
+
     let bg = []
     let texts = []
 
@@ -13,10 +28,6 @@ export default function TodoItem(props) {
     let text = ['👨‍💻','✈','🍉','⌚','🍿']
 
     let cats= ['work', 'travel', 'food', 'urgent', 'entertainment']
-    
-//    const [backG, setBg] = useState('grey')
-//    const [text, setText] = useState('')
-
     return (
         <>
             <div className="container my-5 todoContainer">
@@ -45,8 +56,8 @@ export default function TodoItem(props) {
                             }
                         }
                         return <>
-                            <div className="btn" style={{padding:'0', backgroundColor:cats.includes(props.todo[i].category)?bgs[cats.indexOf(props.todo[i].category)]:"grey", padding:'100px 0'}}>
-                                <span className="text-center" style={{fontSize:'2rem'}}>{cats.includes(props.todo[i].category)?text[cats.indexOf(props.todo[i].category)]:''}</span>
+                            <div className="btn" id="categoryDiv_" style={{padding:'0', backgroundColor:cats.includes(props.todo[i].category)?bgs[cats.indexOf(props.todo[i].category)]:filters[customCategories.indexOf(props.todo[i].category.toLowerCase())].color, padding:'100px 0'}}>
+                                <span className="text-center" style={{fontSize:'2rem'}}>{cats.includes(props.todo[i].category)?text[cats.indexOf(props.todo[i].category)]:filters[customCategories.indexOf(props.todo[i].category.toLowerCase())].char}</span>
                             </div>
                             <div className="item card text-center">
                                 <div className="card-header" style={{backgroundColor: props.todo[i].completed===true?'hsl(150, 60%, 85%)':'white'}}>

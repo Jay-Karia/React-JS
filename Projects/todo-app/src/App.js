@@ -11,6 +11,13 @@ function App() {
     if (storageTodos === null) {
         storageTodos = [];
     }
+
+    let filters = JSON.parse(localStorage.getItem("filter"));
+    if (filters === null) {
+        filters = [];
+    }
+    const [filter, setFilter] = useState(filters)
+
     
     let [todos, setTodos] = useState(storageTodos);
     let [bg, setBg] = useState("")
@@ -19,24 +26,41 @@ function App() {
         if (storageTodos[i][0].completed===false) {
             length_ = length_+1
         }
-        // if (storageTodos[i][0].category.toLowerCase()==="work") setBg('yellow')
-        // else if (storageTodos[i][0].category.toLowerCase()==="travel") setBg('blue')
-        // else if (storageTodos[i][0].category.toLowerCase()==="food") setBg('orange')
-        // else if (storageTodos[i][0].category.toLowerCase()==="urgent") setBg('red')
-        // else if (storageTodos[i][0].category.toLowerCase()==="entertainment") setBg('green')
     }
-    // for (let i=0;i<storageTodos.length;i++) {
-    //     if (storageTodos[i][0].category.toLowerCase()==="work") setBg('yellow')
-    //     else if (storageTodos[i][0].category.toLowerCase()==="travel") setBg('blue')
-    //     else if (storageTodos[i][0].category.toLowerCase()==="food") setBg('orange')
-    //     else if (storageTodos[i][0].category.toLowerCase()==="urgent") setBg('red')
-    //     else if (storageTodos[i][0].category.toLowerCase()==="entertainment") setBg('green')
-    // }
 
     const [len, setLen] = useState(length_)
 
     const [isEditing, setEditing] = useState(false)
     const [id, setId] = useState(0)
+
+    const filterCategory = (category, color)=> {
+        const capitalize = (word)=> {
+            let lower = word.toLowerCase()
+            return lower.charAt(0).toUpperCase() + lower.slice(1)
+        }
+        filterdItems = []
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+
+        let filters = JSON.parse(localStorage.getItem("filter"));
+        if (filters === null) {
+            filters = [];
+        }
+
+        try {
+            for (let i=0;i<stTodos.length;i++) {
+                if (stTodos[i][0].category.toLowerCase()===category.toLowerCase() && stTodos[i][0].completed===false) {
+                    filterdItems.push(stTodos[i])
+                    setTodos(filterdItems)
+                    document.getElementsByClassName('bold')[0].innerHTML = capitalize(category)
+                    document.getElementsByClassName('bold')[0].style.color = color
+                    document.getElementsByClassName('sentence')[0].innerHTML = " ("+filterdItems.length+")"
+                }
+            }
+        } catch{}
+    }
 
     const handleAdd = () => {
         let stTodos = JSON.parse(localStorage.getItem("todos"));
@@ -46,6 +70,7 @@ function App() {
         if (isEditing===false) {
             let e = document.getElementById('category')
             var cate = e.options[e.selectedIndex].text;
+            if (cate.toLowerCase() === 'custom') cate=""
             stTodos.push([
                 {
                     key: stTodos.length,
@@ -53,14 +78,13 @@ function App() {
                     description: document.getElementsByClassName("desc")[0].value,
                     due: document.getElementsByClassName('due')[0].value,
                     completed: false,
-                    category: cate.toLowerCase()
+                    category: cate.toLowerCase()===""?document.getElementsByClassName('customCat')[0].value:cate.toLowerCase()
                 },
             ]);
             localStorage.setItem("todos", JSON.stringify(stTodos));
-            setTodos(stTodos)
             setLen(len+1)
             window.length = stTodos.length
-    
+            
             document.getElementsByClassName("addBTN")[0].innerHTML = "✓";
             document.getElementsByClassName("addBTN")[0].style.backgroundColor =
                 "#14A44D";
@@ -69,6 +93,33 @@ function App() {
 
             document.getElementsByClassName('addContainer')[0].style.boxShadow = "0 2px 2px 0 green"
 
+           
+
+            if (cate==='') {
+                let category = document.getElementsByClassName('customCat')[0].value
+                let color = document.getElementById('exampleColorInput').value
+                let char = document.getElementsByClassName('char')[0].value
+
+                let filters = JSON.parse(localStorage.getItem("filter"));
+                if (filters === null) {
+                    filters = [];
+                }
+
+                let obj = {
+                    'category': category,
+                    'color': color,
+                    'char': char
+                }
+                
+                filters.push(obj)
+                setFilter(filters)
+                localStorage.setItem("filter", JSON.stringify(filters));
+
+                // document.getElementById('categoryDiv_').style.backgroundColor=color
+
+            }
+            setTodos(stTodos)
+           
         } else {
             document.getElementsByClassName('todoTitle')[id].innerHTML = document.getElementsByClassName('title')[0].value
             document.getElementsByClassName('todoDesc')[id].innerHTML = document.getElementsByClassName('desc')[0].value
@@ -93,17 +144,15 @@ function App() {
                 }
             }
         }
-
-        
         setTimeout(() => {
-            document.getElementsByClassName("addBTN")[0].innerHTML = "+";
-            document.getElementsByClassName("addBTN")[0].style.backgroundColor =
-                "#332D2D";
-                document.getElementsByClassName("wd1")[0].innerHTML = 50
-                document.getElementsByClassName("wd")[0].innerHTML = 80
-                document.getElementsByClassName('addContainer')[0].style.boxShadow = "0 2px 2px 0 grey"
-            }, 1000);
-            setEditing(false)
+                document.getElementsByClassName("addBTN")[0].innerHTML = "+";
+                document.getElementsByClassName("addBTN")[0].style.backgroundColor =
+                    "#332D2D";
+                    document.getElementsByClassName("wd1")[0].innerHTML = 50
+                    document.getElementsByClassName("wd")[0].innerHTML = 80
+                    document.getElementsByClassName('addContainer')[0].style.boxShadow = "0 2px 2px 0 grey"
+                }, 1000);
+                setEditing(false)
     }
 
     const handleDone = (id)=>{
@@ -272,48 +321,22 @@ function App() {
         }
     }
 
-    const [collapsed, setCollapse] = useState(false)
-
-    const toggleCollapse = ()=>{
-        if (collapsed) {
-            document.getElementsByClassName("addContainer")[0].style.height = "300px"
-            document.getElementsByClassName("addContainer")[0].style.display = "block"
-
-            document.getElementsByClassName("collapse_btn")[0].innerHTML = "⬆"
-            setCollapse(false)
-        } else {
-            document.getElementsByClassName("addContainer")[0].style.height = "0"
-            document.getElementsByClassName("addContainer")[0].style.display = "none"
-
-            document.getElementsByClassName("collapse_btn")[0].innerHTML = "⬇"
-            setCollapse(true)
+    const delFilter = (id)=>{
+        let filters = JSON.parse(localStorage.getItem("filter"));
+        if (filters === null) {
+            filters = [];
         }
+        filters.splice(id, 1)
+        setFilter(filters)
+        localStorage.setItem("filter", JSON.stringify(filters));
     }
 
-    const filterCategory = (category, color)=> {
-        const capitalize = (word)=> {
-            let lower = word.toLowerCase()
-            return lower.charAt(0).toUpperCase() + lower.slice(1)
-        }
-        let stTodos = JSON.parse(localStorage.getItem("todos"));
-        if (stTodos === null) {
-            stTodos = [];
-        }
-        for (let i=0;i<stTodos.length;i++) {
-            if (stTodos[i][0].category===category && stTodos[i][0].completed===false) {
-                filterdItems.push(stTodos[i])
-                setTodos(filterdItems)
-                document.getElementsByClassName('bold')[0].innerHTML = capitalize(category)
-                document.getElementsByClassName('bold')[0].style.color = color
-                document.getElementsByClassName('sentence')[0].innerHTML = " ("+filterdItems.length+")"
-            }
-        }
-    }
+  
     return (
         <>
             <Navbar />
-            <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd} toggleCollapse={toggleCollapse}/>
-            <Filters completed={completedTasks} allTasks={allTasks} remaining={remainingTasks} filterCategory={filterCategory}/>
+            <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd}/>
+            <Filters completed={completedTasks} allTasks={allTasks} remaining={remainingTasks} filterCategory={filterCategory} filter={filter} delFilter={delFilter}/>
             <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit} len={len} bg={bg}/>
             <Footer />
         </>

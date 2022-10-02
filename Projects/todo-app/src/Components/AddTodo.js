@@ -14,6 +14,7 @@ export default function AddTodo(props) {
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
                             placeholder="Todo Title"
+                            required
                             onChange={props.handleOnChange}
                         />
                         <div
@@ -64,7 +65,7 @@ export default function AddTodo(props) {
                             aria-describedby="inputGroup-sizing-default"
                         />
                     </div>
-                    <div className="input-group mb-3 " style={{ width: "35%" }}>
+                    <div className="input-group mb-3 " style={{ width: "70%" }}>
                         <div
                             className="btn wd"
                             style={{
@@ -81,29 +82,45 @@ export default function AddTodo(props) {
                             <option value="3" style={{backgroundColor: '#fd7e14', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Food</option>
                             <option value="4" style={{backgroundColor: '#dc3545', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Urgent</option>
                             <option value="5" style={{backgroundColor: '#198754', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Entertainment</option>
+                            <option value="6" style={{backgroundColor: '#198754', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Custom</option>
                         </select>
                     </div>
-                        {/* <input
+                        <input
                             maxLength={30}
                             type="text"
-                            className="form-control cat"
+                            className="form-control cat customCat"
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
-                        /> */}
-                        
-                         {/* <div
+                            placeholder="Custom Category"
+                            style={{width:'50%', marginLeft:'20px'}}
+                        />
+                        {/* <label for="exampleColorInput" class="form-label">Choose Color</label> */}
+                        <input type="color" className="form-control form-control-color" id="exampleColorInput" style={{width:'1%'}}></input>
+                        <input
+                            maxLength={30}
+                            type="text"
+                            className="form-control char"
+                            aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default"
+                            placeholder="Character"
+                            style={{width:'10%', marginLeft:'20px'}}
+                        />
+                   {/* <div
                         className="btn btn-secondary"
-                        style={{ height: 'auto', border: "none"}}>
+                        style={{border: "none"}}
+                        onClick={props.handleCustomCat}
+                        >
                         +
                     </div> */}
                     </div>
-                    <div
+                    <button
                         className="btn addBTN btn-dark"
                         style={{ height: "10%", border: "none" }}
                         onClick={props.handleAdd}
+                        type="submit"
                     >
                         +
-                    </div>
+                    </button>
                 </div>
             </div>
         </>

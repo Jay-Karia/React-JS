@@ -52,13 +52,16 @@ img {
     transition: all .2s ease-in;
 }
 
+.button:hover {
+    cursor: pointer;
+}
+
 .button-1 {
     background-color: #0275d8;
 }
 
 .button-1:hover {
     background-color: #5bc0de;
-    cursor: pointer;
 }
 
 .button-2 {
@@ -67,7 +70,6 @@ img {
 
 .button-2:hover {
     background-color: hsl(130, 49%, 72%);
-    cursor: pointer;
 }
 
 .button-3 {
@@ -76,7 +78,6 @@ img {
 
 .button-3:hover {
     background-color: hsl(29, 78%, 73%);
-    cursor: pointer;
 }
 
 .button-4 {
@@ -85,7 +86,6 @@ img {
 
 .button-4:hover {
     background-color: #ffe494;
-    cursor: pointer;
 }
 
 .button-5 {
@@ -94,7 +94,6 @@ img {
 
 .button-5:hover {
     background-color: #99c2ff;
-    cursor: pointer;
 }
 
 .button-6 {
@@ -103,7 +102,6 @@ img {
 
 .button-6:hover {
     background-color: hsl(29, 78%, 73%);
-    cursor: pointer;
 }
 
 .button-7 {
@@ -112,7 +110,6 @@ img {
 
 .button-7:hover {
     background-color: #ff8f9a;
-    cursor: pointer;
 }
 
 .button-8 {
@@ -121,7 +118,6 @@ img {
 
 .button-8:hover {
     background-color: #a4ffd5;
-    cursor: pointer;
 }
 
 h3 {
