@@ -120,6 +120,14 @@ img {
     background-color: #a4ffd5;
 }
 
+.button-9 {
+    background-color: #e9c148;
+}
+
+.button-9:hover {
+    background-color: #ebdf9f;
+}
+
 h3 {
     padding: 5px;
     border-radius: 9px;

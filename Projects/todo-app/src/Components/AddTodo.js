@@ -1,6 +1,12 @@
 import React from "react";
 
 export default function AddTodo(props) {
+    
+    let filters = JSON.parse(localStorage.getItem("filter"));
+    if (filters === null) {
+        filters = [];
+    }
+
     return (
         <>
             <h1 className="text-center my-5">Add a Todo</h1>
@@ -82,7 +88,10 @@ export default function AddTodo(props) {
                             <option value="3" style={{backgroundColor: '#fd7e14', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Food</option>
                             <option value="4" style={{backgroundColor: '#dc3545', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Urgent</option>
                             <option value="5" style={{backgroundColor: '#198754', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Entertainment</option>
-                            <option value="6" style={{backgroundColor: '#198754', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Custom</option>
+                            <option value="6" style={{backgroundColor: '#000000', color:'white', fontSize:'1.2rem', fontFamily:'Arial'}}>Custom</option>
+                            {filters.map((e, i)=>{
+                                return <option value="6" style={{backgroundColor: e.color, fontSize:'1.2rem', fontFamily:'Arial'}}>{e.category}</option>
+                            })}
                         </select>
                     </div>
                         <input

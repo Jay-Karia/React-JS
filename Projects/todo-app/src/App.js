@@ -78,6 +78,7 @@ function App() {
                     description: document.getElementsByClassName("desc")[0].value,
                     due: document.getElementsByClassName('due')[0].value,
                     completed: false,
+                    starred: false,
                     category: cate.toLowerCase()===""?document.getElementsByClassName('customCat')[0].value:cate.toLowerCase()
                 },
             ]);
@@ -96,26 +97,27 @@ function App() {
            
 
             if (cate==='') {
-                let category = document.getElementsByClassName('customCat')[0].value
-                let color = document.getElementById('exampleColorInput').value
-                let char = document.getElementsByClassName('char')[0].value
-
-                let filters = JSON.parse(localStorage.getItem("filter"));
-                if (filters === null) {
-                    filters = [];
-                }
-
-                let obj = {
-                    'category': category,
-                    'color': color,
-                    'char': char
-                }
-                
-                filters.push(obj)
-                setFilter(filters)
-                localStorage.setItem("filter", JSON.stringify(filters));
-
-                // document.getElementById('categoryDiv_').style.backgroundColor=color
+                try {
+                    let category = document.getElementsByClassName('customCat')[0].value
+                    let color = document.getElementById('exampleColorInput').value
+                    let char = document.getElementsByClassName('char')[0].value
+    
+                    let filters = JSON.parse(localStorage.getItem("filter"));
+                    if (filters === null) {
+                        filters = [];
+                    }
+    
+                    let obj = {
+                        'category': category,
+                        'color': color,
+                        'char': char
+                    }
+                    
+                    filters.push(obj)
+                    setFilter(filters)
+                    localStorage.setItem("filter", JSON.stringify(filters));
+    
+                } catch {}
 
             }
             setTodos(stTodos)
@@ -155,59 +157,64 @@ function App() {
                 setEditing(false)
     }
 
-    const handleDone = (id)=>{
+    const toggle = (id, type)=>{
         let stTodos = JSON.parse(localStorage.getItem("todos"));
         if (stTodos === null) {
             stTodos = [];
         }
         try {
-            if (stTodos[id][0].completed===true) {
-                stTodos[id][0].completed = false
-                setLen(len+1)
-                let t = ""
-                if ((len+1)>1) t = "todos"
-                else t = "todo"
-                document.getElementsByClassName('bold')[0].innerHTML = (len+1)+" "
-                document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
-
-                let date = Math.round((new Date(stTodos[id][0].due).getTime()-new Date().getTime())/(1000*60*60*24))
-                let color;
-                let bg_color
-                if (date+1>5) {
-                    color= "14A44D"
-                    bg_color = "hsl(150, 50%, 80%)"
+            if (stTodos[id][0][type]===true) {
+                stTodos[id][0][type] = false
+                if (type==='completed') {
+                    setLen(len+1)
+                    let t = ""
+                    if ((len+1)>1) t = "todos"
+                    else t = "todo"
+                    document.getElementsByClassName('bold')[0].innerHTML = (len+1)+" "
+                    document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
+    
+                    let date = Math.round((new Date(stTodos[id][0].due).getTime()-new Date().getTime())/(1000*60*60*24))
+                    let color;
+                    let bg_color
+                    if (date+1>5) {
+                        color= "14A44D"
+                        bg_color = "hsl(150, 50%, 80%)"
+                    }
+                    else{
+                        color = "orangered" 
+                        bg_color = "hsl(40, 50%, 80%)"
+                    } 
+                    
+                    if (date ===0){
+                        date = "today"
+                        document.getElementsByClassName('dueDate')[id].innerHTML = "• Due "+date
+                    } 
+                    else if (isNaN(date) || date<0) {
+                        date="• No Due Date"
+                        document.getElementsByClassName('dueDate')[id].innerHTML = date
+                    } 
+                    else {
+                        date = (date+1)+"d"
+                        document.getElementsByClassName('dueDate')[id].innerHTML = "• Due "+date
+                    } 
+                    document.getElementsByClassName('dueDate')[id].style.color = color
                 }
-                else{
-                    color = "orangered" 
-                    bg_color = "hsl(40, 50%, 80%)"
-                } 
-                
-                if (date ===0){
-                    date = "today"
-                    document.getElementsByClassName('dueDate')[id].innerHTML = "• Due "+date
-                } 
-                else if (isNaN(date) || date<0) {
-                    date="• No Due Date"
-                    document.getElementsByClassName('dueDate')[id].innerHTML = date
-                } 
-                else {
-                    date = (date+1)+"d"
-                    document.getElementsByClassName('dueDate')[id].innerHTML = "• Due "+date
-                } 
-                document.getElementsByClassName('dueDate')[id].style.color = color
 
 
-            } else if (stTodos[id][0].completed===false) {
-                stTodos[id][0].completed = true
-                setLen(len-1)
-                let t = ""
-                if ((len-1)>1) t = "todos"
-                else t = "todo"
-                document.getElementsByClassName('bold')[0].innerHTML = (len-1)+" "
-                document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
+            } else if (stTodos[id][0][type]===false) {
+                stTodos[id][0][type] = true
+                if (type==='completed') {
+                    setLen(len-1)
+                    let t = ""
+                    if ((len-1)>1) t = "todos"
+                    else t = "todo"
+                    document.getElementsByClassName('bold')[0].innerHTML = (len-1)+" "
+                    document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
+    
+                    document.getElementsByClassName('dueDate')[id].innerHTML = "Done"
+                    document.getElementsByClassName('dueDate')[id].style.color = "green"
 
-                document.getElementsByClassName('dueDate')[id].innerHTML = "Done"
-                document.getElementsByClassName('dueDate')[id].style.color = "green"
+                }
             }
             localStorage.setItem("todos", JSON.stringify(stTodos));
             setTodos(stTodos)
@@ -272,28 +279,35 @@ function App() {
     }
     let filterdItems = []
 
-    const completedTasks = ()=> {
+    const delFilter = (id)=>{
         let stTodos = JSON.parse(localStorage.getItem("todos"));
         if (stTodos === null) {
             stTodos = [];
         }
-        for (let i=0;i<stTodos.length;i++) {
-            if (stTodos[i][0].completed===true) {
-                filterdItems.push(stTodos[i])
-                setTodos(filterdItems)
-                document.getElementsByClassName('bold')[0].innerHTML = "Completed"
-                document.getElementsByClassName('bold')[0].style.color = "#5cb85c"
-                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
+        let bool = []
+        for (let i=0;i<filters.length;i++) {
+            for (let j=0;j<stTodos.length;j++) {
+                bool.push(stTodos[j][0].category!==filters[id].category)
+               }
             }
-        }
-
+            if (bool.includes(true) && !bool.includes(false)) {
+                let filters = JSON.parse(localStorage.getItem("filter"));
+                   if (filters === null) {
+                       filters = [];
+                   }
+                   filters.splice(id, 1)
+                   setFilter(filters)
+                   localStorage.setItem("filter", JSON.stringify(filters));
+            } else {
+            }
     }
-
-    const allTasks = ()=>{
+    
+    const filter_ = (type)=>{
         let stTodos = JSON.parse(localStorage.getItem("todos"));
-        if (stTodos === null) {
-            stTodos = [];
-        }
+    if (stTodos === null) {
+        stTodos = [];
+    }
+        if (type==="all") {
         let t = ""
         if (len>1) t = "todos"
         else t = "todo"
@@ -301,13 +315,17 @@ function App() {
         document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
         document.getElementsByClassName('bold')[0].style.color = "#5cb85c"
         setTodos(stTodos)
-    }
-
-    const remainingTasks = ()=> {
-        let stTodos = JSON.parse(localStorage.getItem("todos"));
-        if (stTodos === null) {
-            stTodos = [];
-        }
+        } else if (type==="done") {
+            for (let i=0;i<stTodos.length;i++) {
+                if (stTodos[i][0].completed===true) {
+                    filterdItems.push(stTodos[i])
+                    setTodos(filterdItems)
+                    document.getElementsByClassName('bold')[0].innerHTML = "Completed"
+                    document.getElementsByClassName('bold')[0].style.color = "#5cb85c"
+                    document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
+                }
+            }
+        } else if (type==="remaining") {
         let filterdItems = []
         for (let i=0;i<stTodos.length;i++) {
             if (stTodos[i][0].completed===false) {
@@ -319,16 +337,18 @@ function App() {
                 document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
             }
         }
-    }
-
-    const delFilter = (id)=>{
-        let filters = JSON.parse(localStorage.getItem("filter"));
-        if (filters === null) {
-            filters = [];
+        } else if (type==="starred") {
+            let filterdItems = []
+            for (let i=0;i<stTodos.length;i++) {
+                if (stTodos[i][0].starred===true) {
+                    filterdItems.push(stTodos[i])
+                    setTodos(filterdItems)
+                    document.getElementsByClassName('bold')[0].innerHTML = "Starred"
+                    document.getElementsByClassName('bold')[0].style.color = "#d9534f"
+                    document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
+                }
+            }
         }
-        filters.splice(id, 1)
-        setFilter(filters)
-        localStorage.setItem("filter", JSON.stringify(filters));
     }
 
   
@@ -336,8 +356,8 @@ function App() {
         <>
             <Navbar />
             <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd}/>
-            <Filters completed={completedTasks} allTasks={allTasks} remaining={remainingTasks} filterCategory={filterCategory} filter={filter} delFilter={delFilter}/>
-            <Todos del={handleDelete} todos={todos} done={handleDone} edit={handleEdit} len={len} bg={bg}/>
+            <Filters filter_={filter_} filterCategory={filterCategory} filter={filter} delFilter={delFilter}/>
+            <Todos del={handleDelete} todos={todos} done={toggle} edit={handleEdit} len={len} bg={bg}/>
             <Footer />
         </>
     );
