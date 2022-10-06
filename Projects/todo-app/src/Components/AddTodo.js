@@ -20,7 +20,6 @@ export default function AddTodo(props) {
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
                             placeholder="Todo Title"
-                            required
                             onChange={props.handleOnChange}
                         />
                         <div
@@ -106,7 +105,7 @@ export default function AddTodo(props) {
                         {/* <label for="exampleColorInput" class="form-label">Choose Color</label> */}
                         <input type="color" className="form-control form-control-color" id="exampleColorInput" style={{width:'1%'}}></input>
                         <input
-                            maxLength={30}
+                            maxLength={2}
                             type="text"
                             className="form-control char"
                             aria-label="Sizing example input"
@@ -124,6 +123,7 @@ export default function AddTodo(props) {
                     </div>
                     <button
                         className="btn addBTN btn-dark"
+                        
                         style={{ height: "10%", border: "none" }}
                         onClick={props.handleAdd}
                         type="submit"

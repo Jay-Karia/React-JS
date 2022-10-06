@@ -3,7 +3,7 @@ import React from 'react'
 export default function Filters(props) {
   let bgs = ['#ffc107','#0d6efd','#fd7e14','#dc3545','#198754']
   return (
-    <div style={{float:'left', width:'22%', height:'100vh', marginLeft:'10px'}}>
+    <div style={{float:'left', width:'22%', height:'100vh', marginLeft:'10px', position:'sticky', top:'0'}}>
       {/* <hr /> */}
       <div className="my-4" style={{border:'1px solid black', borderRadius:'9px', position:'sticky'}}>
       <h2 className='text-center my-4'><strong>Filters</strong></h2>

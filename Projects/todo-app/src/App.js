@@ -96,9 +96,10 @@ function App() {
             document.getElementsByClassName("title")[0].value = "";
             document.getElementsByClassName("desc")[0].value = "";
 
+            
             document.getElementsByClassName('addContainer')[0].style.boxShadow = "0 2px 2px 0 green"
-
-           
+            
+            
 
             if (cate==='') {
                 try {
@@ -124,17 +125,29 @@ function App() {
                 } catch {}
 
             }
+            document.getElementsByClassName("char")[0].value = "";
+            document.getElementsByClassName("cat")[0].value = "";
+            document.getElementsByClassName('form-control-color')[0].value = "#000000"
+
             setTodos(stTodos)
            
         } else {
+            window.location.reload(true)
+
             document.getElementsByClassName('todoTitle')[id].innerHTML = document.getElementsByClassName('title')[0].value
             document.getElementsByClassName('todoDesc')[id].innerHTML = document.getElementsByClassName('desc')[0].value
+            
             for (let i=0;i<stTodos.length;i++) {
                 if (stTodos[i][0].key===id) {
                     stTodos[i][0].title = document.getElementsByClassName('title')[0].value
                     stTodos[i][0].description = document.getElementsByClassName('desc')[0].value
                     stTodos[i][0].due = document.getElementsByClassName('due')[0].value
-                    stTodos[i][0].category = document.getElementById('category').options[document.getElementById('category').selectedIndex].text.toLowerCase()
+                    
+                    if (document.getElementById('category').options[document.getElementById('category').selectedIndex].text.toLowerCase() === 'custom') {
+                        alert('Cannot Edit Custom Category')
+                    } else {
+                        stTodos[i][0].category = document.getElementById('category').options[document.getElementById('category').selectedIndex].text.toLowerCase()
+                    }
 
                     document.getElementsByClassName('todoDesc')[id].style.backgroundColor = "white"
                     document.getElementsByClassName('card-header')[id].style.backgroundColor = "white"
@@ -143,13 +156,13 @@ function App() {
                     document.getElementsByClassName('title')[0].style.backgroundColor = 'white'
                     document.getElementsByClassName('title')[0].value = ""
                     document.getElementsByClassName('desc')[0].value = ""
-                    document.getElementById('category').options[document.getElementById('category').selectedIndex].text = "Work"
 
                     localStorage.setItem("todos", JSON.stringify(stTodos));
                     setTodos(stTodos)
                 }
             }
         }
+
         setTimeout(() => {
                 document.getElementsByClassName("addBTN")[0].innerHTML = "+";
                 document.getElementsByClassName("addBTN")[0].style.backgroundColor =
@@ -260,6 +273,8 @@ function App() {
         if (stTodos === null) {
             stTodos = [];
         }
+        var x = document.getElementById("category");
+        x.remove(5);
         for (let i=0;i<stTodos.length;i++) {
             if (stTodos[i][0].key===id) {
                 document.getElementsByClassName('title')[0].value= stTodos[i][0].title
@@ -374,12 +389,13 @@ function App() {
             stTodos = [];
         }
         let a = document.getElementsByClassName('todoContainer')[id]
-        if (a.style.width==="30%") {
+        if (a.style.width==="50%") {
             stTodos[id][0].shrink = false
             a.style.width='100%'
         } else {
             stTodos[id][0].shrink = true
-            a.style.width = "30%"
+            a.style.width = "50%"
+            document.getElementsByClassName('todoContainer')[id].style.transition = "all .3s ease-in-out"
         }
         localStorage.setItem("todos", JSON.stringify(stTodos));
     }

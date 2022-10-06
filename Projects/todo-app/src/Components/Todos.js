@@ -15,9 +15,11 @@ export default function Todos(props) {
             </>
             :""}
             <div className="wrapper" style={{transition:'all 3s ease-in-out', display:'flex', flexWrap:'wrap'}}>
-                {props.todos.length===0?<h5 className="text-center text-danger my-5">No Todos to Display</h5>: props.todos.map((todo) => {
+                {props.todos.length===0?<h5 className="text-center text-danger my-5" style={{paddingLeft:'43%'}}>No Todos to Display</h5>: props.todos.map((todo) => {
                     return (
+                    // <div style={{paddingLeft:'auto', display:'flex', flexWrap:'wrap'}}>
                         <TodoItem todo = {todo} del={props.del} done={props.done} edit={props.edit} bg={props.bg} shrink={props.shrink}/>
+                    // </div>
                 )
                 })}
             </div>

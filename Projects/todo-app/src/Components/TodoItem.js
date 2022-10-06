@@ -51,7 +51,7 @@ export default function TodoItem(props) {
                                 texts.push('🍿')
                             }
                         }
-                        return    <div className="container my-5 todoContainer" style={{width:props.todo[i].shrink?'30%':'auto'}}>
+                        return    <div className="container my-5 todoContainer" style={{width:props.todo[i].shrink?'50%':'auto'}}>
                              {/* <> */}
                             <div className="btn categoryDiv_"onClick={()=>{props.shrink(props.todo[i].key)}} style={{padding:'0', backgroundColor:cats.includes(props.todo[i].category)?bgs[cats.indexOf(props.todo[i].category)]:filters[customCategories.indexOf(props.todo[i].category.toLowerCase())].color, padding:'100px 0'}}>
                                 <span className="text-center" style={{fontSize:'2rem'}}>{cats.includes(props.todo[i].category)?text[cats.indexOf(props.todo[i].category)]:filters[customCategories.indexOf(props.todo[i].category.toLowerCase())].char}</span>

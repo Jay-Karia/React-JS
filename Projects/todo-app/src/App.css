@@ -154,9 +154,7 @@ h3 {
     display: grid;
     grid-template-columns: 1fr 30fr;
     grid-column-gap: 0;
-    /* display: flex; */
     flex-wrap: wrap;
-    /* flex-direction: row; */
     transition: all .3s ease-in-out;
 }
 
