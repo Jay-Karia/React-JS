@@ -12,14 +12,11 @@ export default function TodoItem(props) {
     }
 
     let customCategories = []
-    let customColors = []
-    let customChars = []
 
     for (let i=0;i<filters.length;i++) {
         customCategories.push(filters[i].category.toLowerCase())
-        customColors.push(filters[i].color)
-        customChars.push(filters[i].char)
     }
+
 
     let bg = []
     let texts = []
@@ -30,7 +27,6 @@ export default function TodoItem(props) {
     let cats= ['work', 'travel', 'food', 'urgent', 'entertainment']
     return (
         <>
-            <div className="container my-5 todoContainer">
                 
                     {props.todo.map((e, i)=>{
                         for (let j=0;j<storageTodos.length;j++) {
@@ -55,34 +51,35 @@ export default function TodoItem(props) {
                                 texts.push('🍿')
                             }
                         }
-                       return <>
-                       <div className="btn" id="categoryDiv_" style={{padding:'0', backgroundColor:cats.includes(props.todo[i].category)?bgs[cats.indexOf(props.todo[i].category)]:filters[customCategories.indexOf(props.todo[i].category.toLowerCase())].color, padding:'100px 0'}}>
-                           <span className="text-center" style={{fontSize:'2rem'}}>{cats.includes(props.todo[i].category)?text[cats.indexOf(props.todo[i].category)]:filters[customCategories.indexOf(props.todo[i].category.toLowerCase())].char}</span>
-                       </div>
-                       <div className="item card text-center">
-                           <div className="card-header" style={{backgroundColor: props.todo[i].completed===true?'hsl(150, 60%, 85%)':props.todo[i].starred?'hsl(58, 100%, 84%)':'white'}}>
-                               <strong className="todoTitle">{props.todo[i].title}</strong>
-                           </div>
-                           <div className="card-body todoDesc">
-                               <p className="card-text">{props.todo[i].description}</p>
-                           </div>
-                           <hr />
-                           <div className="my-2 d2" style={{color: Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))>5 || props.todo[i].completed===true?"green":"orangered"}}>
-                           <strong className="dueDate">
-                               {props.todo[i].completed===false?isNaN(Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24)))===true||Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))<0?"• No due date": props.todo[i].completed===false?Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))===0?"• Due today":"• Due "+Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))+'d':"Done":"Done"}
-                           
-                           </strong>
-                           </div>
-                       <div className="my-2 card-footer"  style={{float:'right'}}>
-                           <img onClick={()=>{props.edit(props.todo[i].key)}} src={require('../edit.jpg')} alt="edit" style={{marginRight:'20px'}} />
-                           <img onClick={()=>{props.done(props.todo[i].key, 'starred')}} src={require('../star.jpg')} alt="edit" style={{marginRight:'20px'}} />
-                           <img onClick={()=>{props.done(props.todo[i].key, 'completed')}} src={require('../done.jpg')} alt="done" style={{marginRight:'20px'}} />
-                           <img onClick={()=>{props.del(props.todo[i].key)}} src={require('../del.png')} alt="delete" />
-                       </div>
-                       </div>
-                   </>
-                   })}
+                        return    <div className="container my-5 todoContainer" style={{width:props.todo[i].shrink?'30%':'auto'}}>
+                             {/* <> */}
+                            <div className="btn categoryDiv_"onClick={()=>{props.shrink(props.todo[i].key)}} style={{padding:'0', backgroundColor:cats.includes(props.todo[i].category)?bgs[cats.indexOf(props.todo[i].category)]:filters[customCategories.indexOf(props.todo[i].category.toLowerCase())].color, padding:'100px 0'}}>
+                                <span className="text-center" style={{fontSize:'2rem'}}>{cats.includes(props.todo[i].category)?text[cats.indexOf(props.todo[i].category)]:filters[customCategories.indexOf(props.todo[i].category.toLowerCase())].char}</span>
+                            </div>
+                            <div className="item card text-center">
+                                <div className="card-header" style={{backgroundColor: props.todo[i].completed===true?'hsl(150, 60%, 85%)':props.todo[i].starred?'hsl(58, 100%, 84%)':'white'}}>
+                                    <strong className="todoTitle">{props.todo[i].title}</strong>
+                                </div>
+                                <div className="card-body todoDesc">
+                                    <p className="card-text todoDesc2">{props.todo[i].description}</p>
+                                </div>
+                                <hr />
+                                <div className="my-2 d2" style={{color: Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))>5 || props.todo[i].completed===true?"green":"orangered"}}>
+                                <strong className="dueDate">
+                                    {props.todo[i].completed===false?isNaN(Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24)))===true||Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))<0?"• No due date": props.todo[i].completed===false?Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))===0?"• Due today":"• Due "+Math.round((new Date(props.todo[i].due).getTime()-new Date().getTime())/(1000*60*60*24))+'d':"Done":"Done"}
+                                
+                                </strong>
+                                </div>
+                            <div className="my-2 card-footer"  style={{float:'right'}}>
+                                <img onClick={()=>{props.edit(props.todo[i].key)}} src={require('../edit.jpg')} alt="edit" style={{marginRight:'20px'}} />
+                                <img onClick={()=>{props.done(props.todo[i].key, 'starred')}} src={require('../star.jpg')} alt="edit" style={{marginRight:'20px'}} />
+                                <img onClick={()=>{props.done(props.todo[i].key, 'completed')}} src={require('../done.jpg')} alt="done" style={{marginRight:'20px'}} />
+                                <img onClick={()=>{props.del(props.todo[i].key)}} src={require('../del.png')} alt="delete" />
+                            </div>
+                            </div>
+                        {/* </> */}
             </div>
+                        })}
         </>
     )
 }

@@ -14,12 +14,13 @@ export default function Todos(props) {
             <h3 className="text-center my-5 text"><strong className="bold">{props.len} </strong><span className="sentence">{props.len>1?"todos":"todo"} remaining</span></h3>
             </>
             :""}
-            
+            <div className="wrapper" style={{transition:'all 3s ease-in-out', display:'flex', flexWrap:'wrap'}}>
                 {props.todos.length===0?<h5 className="text-center text-danger my-5">No Todos to Display</h5>: props.todos.map((todo) => {
                     return (
-                        <TodoItem todo = {todo} del={props.del} done={props.done} edit={props.edit} bg={props.bg}/>
+                        <TodoItem todo = {todo} del={props.del} done={props.done} edit={props.edit} bg={props.bg} shrink={props.shrink}/>
                 )
                 })}
+            </div>
                 
             </div>
         </>

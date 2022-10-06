@@ -26,6 +26,9 @@ function App() {
         if (storageTodos[i][0].completed===false) {
             length_ = length_+1
         }
+        if (storageTodos[i][0].shrink===true) {
+            // document.getElementsByClassName('todoContainer')[i].width = "20%"
+        }
     }
 
     const [len, setLen] = useState(length_)
@@ -79,6 +82,7 @@ function App() {
                     due: document.getElementsByClassName('due')[0].value,
                     completed: false,
                     starred: false,
+                    shrink: false,
                     category: cate.toLowerCase()===""?document.getElementsByClassName('customCat')[0].value:cate.toLowerCase()
                 },
             ]);
@@ -175,14 +179,14 @@ function App() {
     
                     let date = Math.round((new Date(stTodos[id][0].due).getTime()-new Date().getTime())/(1000*60*60*24))
                     let color;
-                    let bg_color
+                    // let bg_color
                     if (date+1>5) {
-                        color= "14A44D"
-                        bg_color = "hsl(150, 50%, 80%)"
+                        color= "#14A44D"
+                        // bg_color = "hsl(150, 50%, 80%)"
                     }
                     else{
                         color = "orangered" 
-                        bg_color = "hsl(40, 50%, 80%)"
+                        // bg_color = "hsl(40, 50%, 80%)"
                     } 
                     
                     if (date ===0){
@@ -198,6 +202,16 @@ function App() {
                         document.getElementsByClassName('dueDate')[id].innerHTML = "• Due "+date
                     } 
                     document.getElementsByClassName('dueDate')[id].style.color = color
+                } else if (type==='starred') {
+                    let t = ""
+                    if ((len+1)>1) t = "todos"
+                    else t = "todo"
+                    for (let i=0;i<stTodos.length;i++) {
+                        filterdItems.push(stTodos[i])
+                        setTodos(filterdItems)
+                        document.getElementsByClassName('bold')[0].innerHTML = (len)+" "
+                        document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
+                    }
                 }
 
 
@@ -290,7 +304,7 @@ function App() {
                 bool.push(stTodos[j][0].category!==filters[id].category)
                }
             }
-            if (bool.includes(true) && !bool.includes(false)) {
+            if (bool.includes(true) && !bool.includes(false) || bool.length==0) {
                 let filters = JSON.parse(localStorage.getItem("filter"));
                    if (filters === null) {
                        filters = [];
@@ -299,6 +313,7 @@ function App() {
                    setFilter(filters)
                    localStorage.setItem("filter", JSON.stringify(filters));
             } else {
+                alert('Could not delete category')
             }
     }
     
@@ -308,6 +323,8 @@ function App() {
         stTodos = [];
     }
         if (type==="all") {
+            document.getElementsByClassName('wrapper')[0].style.display='flex'
+            document.getElementsByClassName('wrapper')[0].style.flexWrap='wrap'
         let t = ""
         if (len>1) t = "todos"
         else t = "todo"
@@ -344,11 +361,27 @@ function App() {
                     filterdItems.push(stTodos[i])
                     setTodos(filterdItems)
                     document.getElementsByClassName('bold')[0].innerHTML = "Starred"
-                    document.getElementsByClassName('bold')[0].style.color = "#d9534f"
+                    document.getElementsByClassName('bold')[0].style.color = "#ffc107"
                     document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
                 }
             }
         }
+    }
+
+    const shrink = (id)=>{
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+        let a = document.getElementsByClassName('todoContainer')[id]
+        if (a.style.width==="30%") {
+            stTodos[id][0].shrink = false
+            a.style.width='100%'
+        } else {
+            stTodos[id][0].shrink = true
+            a.style.width = "30%"
+        }
+        localStorage.setItem("todos", JSON.stringify(stTodos));
     }
 
   
@@ -356,8 +389,10 @@ function App() {
         <>
             <Navbar />
             <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd}/>
+            <div className="pannel">
             <Filters filter_={filter_} filterCategory={filterCategory} filter={filter} delFilter={delFilter}/>
-            <Todos del={handleDelete} todos={todos} done={toggle} edit={handleEdit} len={len} bg={bg}/>
+            <Todos del={handleDelete} todos={todos} done={toggle} edit={handleEdit} len={len} bg={bg} shrink={shrink}/>
+            </div>
             <Footer />
         </>
     );
