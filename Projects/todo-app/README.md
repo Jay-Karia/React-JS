@@ -13,3 +13,4 @@ This cool **Todos App**  is made by **Jay Sanjay Karia** with **React.js**
 - Mark as done
 - Mark as undone
 - Delete a todo
+- Add Categories to your todos
