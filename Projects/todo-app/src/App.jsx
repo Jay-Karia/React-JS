@@ -3,7 +3,6 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Todos from "./Components/Todos";
 import { useState } from "react";
-import Filters from "./Components/Filters";
 import AddTodo from "./Components/AddTodo";
 
 function App() {
