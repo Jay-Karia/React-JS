@@ -6,7 +6,7 @@ This cool **Todos App**  is made by **Jay Sanjay Karia** with **React.js**
 
 > Instantly add todos
 
-> 3 different **Filters** are available for your todos
+> 4 different **Filters** are available for your todos
 
 ### Functions
 - Edit a todo
