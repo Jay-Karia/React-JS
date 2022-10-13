@@ -3,6 +3,7 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Todos from "./Components/Todos";
 import { useState } from "react";
+import Filters from "./Components/Filters";
 import AddTodo from "./Components/AddTodo";
 
 function App() {
@@ -34,6 +35,35 @@ function App() {
 
     const [isEditing, setEditing] = useState(false)
     const [id, setId] = useState(0)
+
+    const filterCategory = (category, color)=> {
+        const capitalize = (word)=> {
+            let lower = word.toLowerCase()
+            return lower.charAt(0).toUpperCase() + lower.slice(1)
+        }
+        filterdItems = []
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+
+        let filters = JSON.parse(localStorage.getItem("filter"));
+        if (filters === null) {
+            filters = [];
+        }
+
+        try {
+            for (let i=0;i<stTodos.length;i++) {
+                if (stTodos[i][0].category.toLowerCase()===category.toLowerCase() && stTodos[i][0].completed===false) {
+                    filterdItems.push(stTodos[i])
+                    setTodos(filterdItems)
+                    document.getElementsByClassName('bold')[0].innerHTML = capitalize(category)
+                    document.getElementsByClassName('bold')[0].style.color = color
+                    document.getElementsByClassName('sentence')[0].innerHTML = " ("+filterdItems.length+")"
+                }
+            }
+        } catch{}
+    }
 
     const handleAdd = () => {
         let stTodos = JSON.parse(localStorage.getItem("todos"));
@@ -278,6 +308,81 @@ function App() {
     }
     let filterdItems = []
 
+    const delFilter = (id)=>{
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+        if (stTodos === null) {
+            stTodos = [];
+        }
+        let bool = []
+        for (let i=0;i<filters.length;i++) {
+            for (let j=0;j<stTodos.length;j++) {
+                bool.push(stTodos[j][0].category!==filters[id].category)
+               }
+            }
+            if (bool.includes(true) && !bool.includes(false) || bool.length==0) {
+                let filters = JSON.parse(localStorage.getItem("filter"));
+                   if (filters === null) {
+                       filters = [];
+                   }
+                   filters.splice(id, 1)
+                   setFilter(filters)
+                   localStorage.setItem("filter", JSON.stringify(filters));
+            } else {
+                alert('Could not delete category')
+            }
+    }
+    
+    const filter_ = (type)=>{
+        let stTodos = JSON.parse(localStorage.getItem("todos"));
+    if (stTodos === null) {
+        stTodos = [];
+    }
+        if (type==="all") {
+            document.getElementsByClassName('wrapper')[0].style.display='flex'
+            document.getElementsByClassName('wrapper')[0].style.flexWrap='wrap'
+        let t = ""
+        if (len>1) t = "todos"
+        else t = "todo"
+        document.getElementsByClassName('bold')[0].innerHTML = len+" "
+        document.getElementsByClassName('sentence')[0].innerHTML = t+" remaining"
+        document.getElementsByClassName('bold')[0].style.color = "#5cb85c"
+        setTodos(stTodos)
+        } else if (type==="done") {
+            for (let i=0;i<stTodos.length;i++) {
+                if (stTodos[i][0].completed===true) {
+                    filterdItems.push(stTodos[i])
+                    setTodos(filterdItems)
+                    document.getElementsByClassName('bold')[0].innerHTML = "Completed"
+                    document.getElementsByClassName('bold')[0].style.color = "#5cb85c"
+                    document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
+                }
+            }
+        } else if (type==="remaining") {
+        let filterdItems = []
+        for (let i=0;i<stTodos.length;i++) {
+            if (stTodos[i][0].completed===false) {
+                filterdItems.push(stTodos[i])
+                setTodos(filterdItems)
+                document.getElementsByClassName('bold')[0].innerHTML = "Remaining"
+                document.getElementsByClassName('bold')[0].style.color = "#d9534f"
+                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
+                document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
+            }
+        }
+        } else if (type==="starred") {
+            let filterdItems = []
+            for (let i=0;i<stTodos.length;i++) {
+                if (stTodos[i][0].starred===true) {
+                    filterdItems.push(stTodos[i])
+                    setTodos(filterdItems)
+                    document.getElementsByClassName('bold')[0].innerHTML = "Starred"
+                    document.getElementsByClassName('bold')[0].style.color = "#ffc107"
+                    document.getElementsByClassName('sentence')[0].innerHTML = " tasks ("+filterdItems.length+")"
+                }
+            }
+        }
+    }
+
     const shrink = (id)=>{
         let stTodos = JSON.parse(localStorage.getItem("todos"));
         if (stTodos === null) {
@@ -295,12 +400,23 @@ function App() {
         localStorage.setItem("todos", JSON.stringify(stTodos));
     }
 
+    const collapse = (i)=>{
+        if (document.getElementsByClassName('collapse_')[i].style.display ="block") {
+            document.getElementsByClassName('collapse_')[i].style.display ="none"
+        } else {
+            document.getElementsByClassName('collapse_')[i].style.display ="block"
+        }
+    }
+
   
     return (
         <>
             <Navbar />
             <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd}/>
+            {/* <div className="pannel"> */}
+            <Filters filter_={filter_} filterCategory={filterCategory} filter={filter} delFilter={delFilter} collapse={collapse}/>
             <Todos del={handleDelete} todos={todos} done={toggle} edit={handleEdit} len={len} bg={bg} shrink={shrink}/>
+            {/* </div> */}
             <Footer />
         </>
     );
