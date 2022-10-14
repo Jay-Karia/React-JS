@@ -5,7 +5,7 @@ export default function Filters(props) {
   return (
     <div >
       {/* <hr /> */}
-      <div className="my-4 collapse_"  onClick={()=>{props.collapse(0)}}>
+      <div className="my-4 collapse_">
         <h2 className='text-center my-4'><strong>Filters</strong></h2>
 
         <div className="filters">

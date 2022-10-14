@@ -6,7 +6,13 @@ import { useState } from "react";
 import Filters from "./Components/Filters";
 import AddTodo from "./Components/AddTodo";
 
+import { useMediaQuery } from 'react-responsive'
+
+
 function App() {
+
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 559px)' })
+
     let storageTodos = JSON.parse(localStorage.getItem("todos"));
     if (storageTodos === null) {
         storageTodos = [];
@@ -392,20 +398,15 @@ function App() {
         if (a.style.width==="50%") {
             stTodos[id][0].shrink = false
             a.style.width='100%'
+            document.getElementsByClassName('todoContainer')[id].style.transition = "all .3s ease-in-out"
+            document.getElementsByClassName('wrapper')[0].style.transition = "all .3s ease-in-out"
         } else {
             stTodos[id][0].shrink = true
             a.style.width = "50%"
             document.getElementsByClassName('todoContainer')[id].style.transition = "all .3s ease-in-out"
+            document.getElementsByClassName('wrapper')[0].style.transition = "all .3s ease-in-out"
         }
         localStorage.setItem("todos", JSON.stringify(stTodos));
-    }
-
-    const collapse = (i)=>{
-        if (document.getElementsByClassName('collapse_')[i].style.display ="block") {
-            document.getElementsByClassName('collapse_')[i].style.display ="none"
-        } else {
-            document.getElementsByClassName('collapse_')[i].style.display ="block"
-        }
     }
 
   
@@ -414,7 +415,7 @@ function App() {
             <Navbar />
             <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd}/>
             {/* <div className="pannel"> */}
-            <Filters filter_={filter_} filterCategory={filterCategory} filter={filter} delFilter={delFilter} collapse={collapse}/>
+            <Filters filter_={filter_} filterCategory={filterCategory} filter={filter} delFilter={delFilter}/>
             <Todos del={handleDelete} todos={todos} done={toggle} edit={handleEdit} len={len} bg={bg} shrink={shrink}/>
             {/* </div> */}
             <Footer />
@@ -423,4 +424,4 @@ function App() {
 }
 
 export default App;
-// 1127px media width
+// 823px media width
