@@ -11,7 +11,8 @@ import { useMediaQuery } from 'react-responsive'
 
 function App() {
 
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 559px)' })
+    let isTabletOrMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+    let verySmall = useMediaQuery({ query: '(max-width: 294px)' })
 
     let storageTodos = JSON.parse(localStorage.getItem("todos"));
     if (storageTodos === null) {
@@ -413,7 +414,7 @@ function App() {
     return (
         <>
             <Navbar />
-            <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} handleAdd={handleAdd}/>
+            <AddTodo title={title} desc={desc} handleOnChange={handleOnChange} handleOnChange1={handleOnChange1} isTabletOrMobile={isTabletOrMobile} verySmall={verySmall} handleAdd={handleAdd}/>
             {/* <div className="pannel"> */}
             <Filters filter_={filter_} filterCategory={filterCategory} filter={filter} delFilter={delFilter}/>
             <Todos del={handleDelete} todos={todos} done={toggle} edit={handleEdit} len={len} bg={bg} shrink={shrink}/>

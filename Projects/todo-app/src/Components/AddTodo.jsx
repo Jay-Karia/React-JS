@@ -1,7 +1,5 @@
 import React from "react";
 
-import MediaQuery from 'react-responsive'
-
 export default function AddTodo(props) {
     
     let filters = JSON.parse(localStorage.getItem("filter"));
@@ -9,12 +7,18 @@ export default function AddTodo(props) {
         filters = [];
     }
 
+    if (props.isTabletOrMobile) {
+        // document.getElementsByClassName('flexBox')[0].style.display = 'flex'
+        // document.getElementsByClassName('flexBox')[0].style.justifyContent = 'center'
+        // document.getElementsByClassName('flexBox')[0].style.alignItems = 'center'
+    }
+
     return (
         <>
             <h1 className="text-center my-5">Add a Todo</h1>
             <div className="container my-5 text-center justify-content-between addTodoContainer">
                 <div className="addContainer">
-                    <div className="input-group mb-3" style={{ width: "50%" }}>
+                    <div className="input-group mb-3" style={{width: props.isTabletOrMobile?'100%':'50%'}}>
                         <input
                             maxLength={50}
                             type="text"
@@ -35,7 +39,7 @@ export default function AddTodo(props) {
                         </div>
                     </div>
 
-                    <div className="input-group mb-3 " style={{ width: "80%" }}>
+                    <div className="input-group mb-3 " style={{ width: props.isTabletOrMobile?'100%':'80%' }}>
                         <textarea
                             type="text"
                             maxLength={80}
@@ -55,7 +59,7 @@ export default function AddTodo(props) {
                             {80 - props.desc.length}
                         </div>
                     </div>
-                    <div className="input-group mb-3 " style={{ width: "20%" }}>
+                    <div className="input-group mb-3 " style={{ width: props.isTabletOrMobile?'90%':'20%' }}>
                         <div
                             className="btn wd"
                             style={{
@@ -72,12 +76,13 @@ export default function AddTodo(props) {
                             aria-describedby="inputGroup-sizing-default"
                         />
                     </div>
-                    <div className="input-group mb-3 " style={{ width: "70%" }}>
+                    <div className="input-group mb-3 flexBox" style={{ width: props.isTabletOrMobile?'100%':'70%', display:props.isTabletOrMobile?'flex':'', justifyContent:props.isTabletOrMobile?'center':'', alignItems:props.isTabletOrMobile?'center':''}}>
                         <div
                             className="btn wd"
                             style={{
                                 cursor: "default",
                                 border: "1px solid grey",
+                                marginBottom:props.verySmall?'10px':''
                             }}
                         >
                             <label htmlFor="due">Category</label>
@@ -95,7 +100,6 @@ export default function AddTodo(props) {
                             })}
                         </select>
                     </div>
-                        <MediaQuery minWidth={930}>
                         <input
                             maxLength={30}
                             type="text"
@@ -103,7 +107,7 @@ export default function AddTodo(props) {
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
                             placeholder="Custom Category"
-                            style={{width:'50%', marginLeft:'20px'}}
+                            style={{width:'50%', marginLeft:'20px', margin:props.isTabletOrMobile?'20px':''}}
                         />
                         {/* <label for="exampleColorInput" class="form-label">Choose Color</label> */}
                         <input type="color" className="form-control form-control-color" id="exampleColorInput" style={{width:'1%'}}></input>
@@ -114,33 +118,8 @@ export default function AddTodo(props) {
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
                             placeholder="Character"
-                            style={{width:'10%', marginLeft:'20px'}}
+                            style={{width:props.isTabletOrMobile?'20%':'10%', marginLeft:'20px'}}
                         />
-                        </MediaQuery>
-                        <MediaQuery maxWidth={930}>
-                            <div className="container d-flex justify-content-between my-2" style={{width:'100%', padding:'0'}} >
-                            <input
-                            maxLength={30}
-                            type="text"
-                            className="form-control cat customCat mr-2"
-                            aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default"
-                            placeholder="Custom Category"
-                            style={{width:'100%'}}
-                        />
-                        {/* <label for="exampleColorInput" class="form-label">Choose Color</label> */}
-                        <input type="color" className="form-control form-control-color mx-2" id="exampleColorInput" style={{width:'20%'}}></input>
-                        <input
-                            maxLength={2}
-                            type="text"
-                            className="form-control char mx-2"
-                            aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default"
-                            placeholder="Character"
-                            // style={{width:'auto', marginLeft:'20px'}}
-                        />
-                            </div>
-                        </MediaQuery>
                     </div>
                     <button
                         className="btn addBTN btn-dark"
