@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const RatesSchema = mongoose.Schema({
+const CodingSchema = mongoose.Schema({
     "Name": String,
-    "Email": String
+    "Language": String
 })
 
-module.exports = mongoose.model('coding', RatesSchema);
+module.exports = mongoose.model('coding', CodingSchema);
