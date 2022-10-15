@@ -2,6 +2,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const router = require('./Routes/routes')
+const auth = require('./Routes/auth')
 
 const connect = require('./db/connectDB')
 
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api', router)
+app.use('/api/auth', auth)
 
 // Listening
 app.listen(port, () => console.log(`App listening on port ${port}`))
