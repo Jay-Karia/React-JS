@@ -1,10 +1,8 @@
 const express = require('express')
-const router = express.Router();
+const router = express.Router()
 
-const Codes = require('../Models/coding')
-
-router.get('/coding', (req, res) => {
-    res.send('Hello from backend')
+router.get('/', (req, res) => {
+    res.send('Hello from back')
 })
 
-module.exports = router;
+module.exports = router

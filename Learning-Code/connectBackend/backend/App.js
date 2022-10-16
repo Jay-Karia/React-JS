@@ -1,24 +1,17 @@
-//Imports
 const express = require('express')
-const bodyParser = require('body-parser')
-const router = require('./Routes/routes')
+const App = express()
+const routes = require('./Routes/routes')
 const auth = require('./Routes/auth')
 
-const connect = require('./db/connectDB')
+const connectDB = require('./db/connectDB')
 
-const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000
 
-// Connecting to Database
-connect()
+connectDB()
 
-// Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+App.use('/api', routes)
+App.use('/api/auth', auth)
 
-// Routes
-app.use('/api', router)
-app.use('/api/auth', auth)
 
 // Listening
-app.listen(port, () => console.log(`App listening on port ${port}`))
+App.listen(port, () => console.log(`App listening on port ${port}`))

@@ -1,17 +1,15 @@
 const express = require('express')
 const router = express.Router()
 
-const Codes = require('../Models/coding')
+const Code = require('../Models/coding')
 
 router.get('/', (req, res) => {
-    let name = "Jay Karia"
-    let lang = "JavaScript"
-    const codes = new Codes({
-        "Name": name,
-        "Language": lang
+    const codes = new Code({
+        "Name": "Jay Sanjay Karia",
+        "Language": "Java"
     })
     codes.save()
-    res.send('Hello auth')
+    res.send('Hello from auth')
 })
 
 module.exports = router
