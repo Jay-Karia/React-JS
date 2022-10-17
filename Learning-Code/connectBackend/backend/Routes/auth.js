@@ -1,15 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
-const Code = require('../Models/coding')
+const User = require('../Models/user')
 
-router.get('/', (req, res) => {
-    const codes = new Code({
+router.post('/createUser', (req, res) => {
+    const users = new User({
         "Name": "Jay Sanjay Karia",
-        "Language": "Java"
+        "Email": "jay.sanjay.karia@gmail.com",
+        "Password": "09Jan197#"
     })
-    codes.save()
-    res.send('Hello from auth')
+    users.save()
+    res.send('New user created')
 })
 
 module.exports = router
