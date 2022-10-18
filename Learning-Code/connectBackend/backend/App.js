@@ -9,6 +9,7 @@ const port = process.env.PORT || 8000
 
 connectDB()
 
+App.use(express.json())
 App.use('/api', routes)
 App.use('/api/auth', auth)
 

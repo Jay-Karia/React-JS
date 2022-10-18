@@ -1,12 +1,15 @@
 const mongoose = require('mongoose')
 
-const CodingSchema = mongoose.Schema({
-    "Name": String,
-    "Email": String,
-    "Password": String
+const UserSchema = mongoose.Schema({
+    "name": String,
+    "email": {
+        type: String,
+        unique: true
+    },
+    "password": String
 })
 
-const user = mongoose.model('coding', CodingSchema);
-user.createIndexes()
+const user = mongoose.model('user', UserSchema);
+user.syncIndexes()
 
-module.exports = mongoose.model('coding', CodingSchema);
+module.exports = user

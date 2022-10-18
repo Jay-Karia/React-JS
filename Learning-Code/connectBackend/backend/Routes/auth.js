@@ -6,7 +6,11 @@ var bcrpytjs = require('bcryptjs')
 
 const User = require('../Models/user')
 
-router.get('/createUser', body('Name').isLength({ min: 3 }), body('Email').isEmail(), (req, res) => {
+router.get('/createUser', [
+    body('name', 'Enter a valid name (more than 3 characters)').isLength({ min: 3 }),
+    body('email', 'Enter a valid email').isEmail(),
+    body('password', 'Enter a valid password (more than 5 characters)').isLength({ min: 5 })
+], (req, res) => {
     let salt = ''
     let secPass = ''
     async function genSecPass() {
@@ -19,18 +23,16 @@ router.get('/createUser', body('Name').isLength({ min: 3 }), body('Email').isEma
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            console.log(errors.array())
+            res.status(400).json({ errors: errors.array() })
         }
-        const users = new User({
-            Name: "jays",
-            Email: "jay.sanjay.karia@gmail.com",
-            Password: hash
+        User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: hash
+        }).then((user) => { res.json(user) }).catch((err) => {
+            console.log(err);
+            res.json('Enter a unique value for email')
         })
-        users.save()
-        res.send('New user created')
-    }).catch((err) => {
-        console.log(err)
-        res.send('Could not create user')
     })
 })
 
