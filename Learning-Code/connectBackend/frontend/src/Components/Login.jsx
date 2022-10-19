@@ -1,6 +1,28 @@
 import React from 'react'
+import { useState } from 'react'
+import '../App.css'
 
 export default function Login() {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  
+
+  async function login(e) {
+    e.preventDefault()
+    await fetch('http://localhost:8000/api/login', {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'Access-Control-Allow-Origin':true
+        },
+        body: JSON.stringify({
+            'email': email,
+            'password': password
+        })
+    })
+}
+
   return (
     <>
     <h1 align='center'>Login</h1>

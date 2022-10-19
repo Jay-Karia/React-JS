@@ -1,6 +1,27 @@
 import React from 'react'
+import { useState } from 'react'
+import '../App.css'
 
 export default function Register() {
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    async function register(e) {
+        e.preventDefault()
+        await fetch('http://localhost:8000/api/register', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin':true
+            },
+            body: JSON.stringify({
+                'name': name,
+                'email': email,
+                'password': password
+            })
+        })
+    }
   return (
     <>
      <h1 align='center'>Sign Up</h1>
