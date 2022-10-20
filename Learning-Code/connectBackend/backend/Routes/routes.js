@@ -3,6 +3,8 @@ const router = express.Router()
 
 const User = require('../Models/user')
 const { body, validationResult } = require('express-validator')
+const jwt = require('jsonwebtoken');
+const { json } = require('express');
 
 router.get('/', (req, res) => {
     res.send('Hello from back')
@@ -23,8 +25,10 @@ router.post('/register', [
 
         // Create a new user
         const user = await User.create(req.body)
-        res.send(user)
-    } catch {}
+        return res.status(200).json({ status: 'ok' })
+    } catch {
+        return res.status(400).json({ msg: 'Some internal error occurred', status: 'error' })
+    }
 })
 
 router.post('/login', [
@@ -42,9 +46,14 @@ router.post('/login', [
         // Check for an existing user
         const user = await User.find({ email: req.body.email, password: req.body.password })
         if (user && user.length != 0) {
-            res.send(user)
+
+            const token = jwt.sign({
+                name: user.name,
+                email: user.email
+            }, 'secret123')
+            return res.status(200).json({ msg: 'User exists', token: token })
         } else {
-            res.status(400).json({ error: 'Could not find user' })
+            return res.status(400).json({ error: 'Could not find user' })
         }
     } catch {}
 })
