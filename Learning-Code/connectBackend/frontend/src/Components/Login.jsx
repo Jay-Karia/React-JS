@@ -7,20 +7,29 @@ export default function Login() {
   const [password, setPassword] = useState("")
 
   
-
+  
   async function login(e) {
-    e.preventDefault()
-    await fetch('http://localhost:8000/api/login', {
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json',
-            'Access-Control-Allow-Origin':true
+      e.preventDefault()
+    //   await console.log('Hello');
+      const response = await fetch('http://localhost:8000/api/login', {
+          method:'POST',
+          headers:{
+              'Content-Type':'application/json',
+              'Access-Control-Allow-Origin':true
         },
         body: JSON.stringify({
             'email': email,
             'password': password
         })
     })
+    
+    const data = await response.json()
+    if (data.msg==="User exists") {
+        alert(data.token)
+        window.location.href = '/dashboard'
+    } else {
+        alert('Password or email does not match')
+    }
 }
 
   return (

@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 import '../App.css'
+import { Buffer } from 'buffer';
+global.Buffer = Buffer;
 
 export default function Register() {
     const [name, setName] = useState("")
@@ -9,7 +11,7 @@ export default function Register() {
 
     async function register(e) {
         e.preventDefault()
-        await fetch('http://localhost:8000/api/register', {
+        const response = await fetch('http://localhost:8000/api/register', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -21,6 +23,10 @@ export default function Register() {
                 'password': password
             })
         })
+
+        const data = response.json()
+        if (data.status === 'ok') {
+        }
     }
   return (
     <>
