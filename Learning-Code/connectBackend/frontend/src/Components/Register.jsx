@@ -1,8 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
 import '../App.css'
-import { Buffer } from 'buffer';
-global.Buffer = Buffer;
 
 export default function Register() {
     const [name, setName] = useState("")
@@ -26,6 +24,7 @@ export default function Register() {
 
         const data = response.json()
         if (data.status === 'ok') {
+            console.log('Registered successfully')
         }
     }
   return (
