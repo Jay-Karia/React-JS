@@ -4,7 +4,6 @@ const router = express.Router()
 const User = require('../Models/user')
 const { body, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken');
-const { json } = require('express');
 
 router.get('/', (req, res) => {
     res.send('Hello from back')
