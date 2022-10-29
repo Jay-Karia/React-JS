@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { default: mongoose } = require('mongoose');
 
 const routes = require('./Routes/routes')
+require('dotenv').config()
 
 const app = express()
 
@@ -10,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // Connecting to Database
-const dbURI = 'mongodb+srv://Jay:09Jan1973@cluster0.vpjxkmo.mongodb.net/?retryWrites=true&w=majority'
+const dbURI = process.env.dbURI
 mongoose.connect(dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
