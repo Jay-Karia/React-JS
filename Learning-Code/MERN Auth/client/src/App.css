@@ -3,13 +3,23 @@
     padding: 0;
 }
 
+html {
+    background: url("./bg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh;
+}
+
 .container {
-    border: 1px solid white;
+    border: 1px solid black;
     border-radius: 4px;
-    width: 15rem;
-    background-color: rgb(46, 46, 46);
+    width: 20rem;
+    background-color: rgb(44, 44, 44);
     color: white;
-    height: 20rem;
+    box-shadow: 0 1px 1px 0 black;
+    opacity: 0.9;
+    height: 28rem;
 }
 
 .form {
@@ -24,6 +34,7 @@ input {
     border-radius: 4px;
     margin-top: 10px;
     color: black;
+    width: 15rem;
 }
 
 button {
@@ -54,4 +65,14 @@ a {
     color: white;
     text-decoration: none;
     font-size: 1rem;
+}
+
+.input_field {
+    margin: 10px 0 0 10px;
+    float: left;
+}
+
+label {
+    margin-right: 10px;
+    float: left;
 }

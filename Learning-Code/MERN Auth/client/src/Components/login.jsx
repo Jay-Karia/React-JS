@@ -27,7 +27,14 @@ export default function Login() {
             .then((res) => res.json())
             .then((data) => {
                 alert(data.msg);
-                localStorage.setItem("token", data.token);
+                if (data.status !== "error") {
+                    localStorage.setItem("token", data.token);
+                } else {
+                    document.getElementsByTagName("input")[0].style.boxShadow =
+                        "0 0 1px 1px red";
+                    document.getElementsByTagName("input")[1].style.boxShadow =
+                        "0 0 1px 1px red";
+                }
             });
     }
     useEffect(() => {
@@ -36,13 +43,15 @@ export default function Login() {
                 "x-access-token": localStorage.getItem("token"),
             },
         }).then((res, data) => {
-            alert(data);
+            // alert(data);
         });
     }, []);
 
     return (
         <>
-            <h1 align="center">Login</h1>
+            <h1 align="center" style={{ color: "white" }}>
+                Login
+            </h1>
             <div
                 style={{
                     display: "flex",
@@ -51,22 +60,32 @@ export default function Login() {
                     marginTop: "20px",
                 }}
             >
-                <div className="container" align="center">
+                <div
+                    className="container"
+                    style={{ height: "20rem" }}
+                    align="center"
+                >
                     <form className="form" onSubmit={login}>
-                        <input
-                            type="email"
-                            onChange={(e) => {
-                                setEmail(e.target.value);
-                            }}
-                            placeholder="Email"
-                        />
-                        <input
-                            type="password"
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                            }}
-                            placeholder="Password"
-                        />
+                        <div className="input_field">
+                            <label htmlFor="title">Email</label>
+                            <input
+                                type="email"
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                }}
+                                placeholder="Email"
+                            />
+                        </div>
+                        <div className="input_field">
+                            <label htmlFor="title">Password</label>
+                            <input
+                                type="password"
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
+                                placeholder="Password"
+                            />
+                        </div>
 
                         <button type="submit">Log In</button>
                     </form>
