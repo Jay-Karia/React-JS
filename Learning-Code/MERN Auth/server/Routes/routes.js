@@ -75,7 +75,7 @@ router.post('/login', async(req, res) => {
                         if (err) return res.status(400).json({ msg: err, status: "error" })
                         return res.json({
                             msg: 'Success',
-                            token: 'Bearer ' + token
+                            token: 'Bearer ' + token,
                         })
                     }
 
@@ -87,8 +87,8 @@ router.post('/login', async(req, res) => {
     })
 })
 
-// Now the user is logged in
-router.get('/getUser', verifyJWT, (req, res) => {
+// Confirms whether the user is logged in
+router.get('/isUserAuth', verifyJWT, (req, res) => {
     res.json({
         isLoggedIn: true,
         name: req.user.name
