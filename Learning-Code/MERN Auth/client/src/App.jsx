@@ -4,12 +4,13 @@ import Register from "./Components/register.jsx";
 import Login from "./Components/login.jsx";
 import Profile from "./Components/profile.jsx";
 import Navbar from "./Components/navbar.jsx";
+import { useState } from "react";
 
 function App() {
     return (
         <>
-            <Navbar />
             <Router>
+                <Navbar />
                 <Routes>
                     <Route exact path="/register" element={<Register />} />
                     <Route exact path="/login" element={<Login />} />

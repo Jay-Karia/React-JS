@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function navbar() {
+function Navbar() {
     const navigate = useNavigate();
-    const [username, setUsername] = useState(null);
+    const [Username, SetUsername] = useState("");
 
     async function logout() {
         localStorage.removeItem("token");
-        await navigate.push("/login");
+        navigate("/login");
     }
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export default function navbar() {
             },
         })
             .then((res) => res.json())
-            .then((data) => (data.isLoggedIn ? setUsername(data.name) : null));
+            .then((data) => (data.isLoggedIn ? SetUsername(data.name) : null));
     });
 
     return (
@@ -36,15 +36,18 @@ export default function navbar() {
             <li>
                 <div
                     onClick={() => {
-                        logout;
+                        logout();
                     }}
+                    style={{ cursor: "pointer" }}
                 >
                     Logout
                 </div>
             </li>
             <li>
-                <Link to={"/u/" + username}></Link>
+                <Link to={"/u/" + Username}></Link>
             </li>
         </ul>
     );
 }
+
+export default Navbar;

@@ -1,13 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "../App.css";
-// import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // const history = useHistory();
+    const navigate = useNavigate();
 
     async function login(e) {
         e.preventDefault();
@@ -42,10 +42,13 @@ export default function Login() {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             },
-        }).then((res, data) => {
-            // alert(data);
-        });
-    }, []);
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (!data.isLoggedIn) return;
+                navigate("/profile");
+            });
+    });
 
     return (
         <>

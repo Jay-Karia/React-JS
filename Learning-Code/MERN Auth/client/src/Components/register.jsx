@@ -39,7 +39,8 @@ export default function Register() {
             .then((res) => res.json())
             .then((data) => {
                 alert(data.msg);
-                data.isLoggedIn ? navigate.push("/dashboard") : null;
+                if (!data.isLoggedIn) return;
+                navigate("/profile");
             });
     }
 
